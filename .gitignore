@@ -1,2 +1,4 @@
 Backend/bin/
 Backend/obj/
+tools/dotnet-sdk/
+tools/dotnet-sdk.zip

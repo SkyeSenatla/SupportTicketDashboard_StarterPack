@@ -1,5 +1,4 @@
-# Support Ticket Dashboard — Take-Home Exercise
-
+# Support Ticket Dashboard — Trainee Technical Test
 ## The Scenario
 
 You're stepping into a project left behind by a junior developer who was
@@ -34,19 +33,24 @@ reference — you're rebuilding this behavior.
   set up doesn't count against your time. Roughly 90 minutes backend, 60
   minutes frontend from there — the backend is the harder, more
   heavily-weighted half of this exercise.
-- **No internet access, except GitHub for this repository.** You may use
-  `git clone` / `git push` against the assessment repo (see Phase 0) —
-  nothing else online. No searching, no documentation sites, no AI tools,
-  no browsing other repos.
+- **No internet access, except GitHub for this repository.** You may fork,
+  clone, and push to your own fork of the assessment repo, and open a Pull
+  Request against it (see Phase 0) — nothing else online. No searching, no
+  documentation sites, no AI tools, no browsing other repos.
 - **No installs.** Don't run `npm install`, `dotnet add package`, or add any
-  dependencies — you're only editing the files that already exist.
+  dependencies — you're only editing the files that already exist. (Running
+  `tools/setup-dotnet.ps1`/`.sh` in Phase 0 doesn't count as an install —
+  it only unzips a folder and points `PATH` at it for your terminal
+  session; it changes nothing system-wide.)
 - You have VS Code and nothing else. That's all you need.
 - Search the project for `TODO` to find every place you need to make a change.
 - Not every bug in this project is marked with a `TODO` — see Phase 1 below.
-- **This is a shared repository.** Every candidate branches off the same
-  repo, so other candidates' branches are technically visible to you once
-  they're pushed. Do not open, read, or copy from another candidate's
-  branch — doing so disqualifies your submission.
+- **This repo is public, and so is your Pull Request the moment you open
+  it.** Anyone — including other candidates — can technically view any
+  open PR against this repo. You may not view, read, or copy any Pull
+  Request other than your own until a proctor tells you the assessment
+  period has fully ended. Doing so, or being found to have done so,
+  disqualifies your submission.
 
 ## Phase 0 — Get Set Up (untimed, do this first)
 
@@ -62,20 +66,29 @@ it just gets you to a working starting point.
    If that errors instead of printing a version number, ask a proctor
    before continuing.
 
-3. Clone the repository:
+3. **Fork the repository.** In a browser, go to
+   `https://github.com/SkyeSenatla/SupportTicketDashboard_StarterPack`,
+   sign in to your own GitHub account (create a free one now if you don't
+   have one), and click **Fork** (top-right) to create your own copy of it
+   under your account. You'll push your work to this fork, not the
+   original — that's what lets you push without needing anyone to grant
+   you access first.
+
+4. Clone **your fork** (not the original — check the URL has your username
+   in it):
    ```
-   git clone <REPO_URL>
-   cd <REPO_FOLDER_NAME>
+   git clone https://github.com/<your-github-username>/SupportTicketDashboard_StarterPack.git
+   cd SupportTicketDashboard_StarterPack
    ```
 
-4. If you've never used git on this machine before, set your identity
+5. If you've never used git on this machine before, set your identity
    (skip this if you already know it's configured):
    ```
    git config --global user.name "Your Name"
    git config --global user.email "you@example.com"
    ```
 
-5. Create your own branch, named after you — first name, underscore, last
+6. Create your own branch, named after you — first name, underscore, last
    name (replace any spaces or hyphens in your name with underscores too),
    e.g. `Jane_Doe`:
    ```
@@ -89,35 +102,49 @@ it just gets you to a working starting point.
    The line with a `*` next to it is your current branch — make sure it's
    yours, not `main`.
 
-6. Confirm the project runs, so you know your machine is good before the
+7. Confirm the project runs, so you know your machine is good before the
    clock starts:
    ```
    cd Backend
    dotnet run
    cd ..
    ```
+   This should build the project and print ticket data. If instead you get
+   an error like `'dotnet' is not recognized` or `No .NET SDKs were found`,
+   the .NET SDK isn't installed system-wide on this machine. Don't try to
+   install it yourself — instead, from the repo root, run:
+   ```
+   .\tools\setup-dotnet.ps1
+   ```
+   (macOS/Linux: `source ./tools/setup-dotnet.sh` — the `source` matters).
+   This activates a portable copy of the SDK for just this terminal window,
+   with no admin rights or install needed. Then retry step 7. If that
+   script also can't find a portable SDK to use, ask a proctor — don't
+   spend your own time chasing it further.
 
-7. **Start your 2.5-hour timer now.** Everything from here on (Phases 1–3)
+8. **Start your 2.5-hour timer now.** Everything from here on (Phases 1–3)
    is timed.
 
-8. While you work, save your progress as often as you like:
+9. While you work, save your progress as often as you like:
    ```
    git add .
    git commit -m "describe what you changed"
    ```
 
-9. When you're done (or time is up), push your branch:
-   ```
-   git push -u origin Jane_Doe
-   ```
-   (Replace `Jane_Doe` with your branch name. You only need `-u origin
-   Jane_Doe` the first time — after that, plain `git push` is enough.) If
-   this fails saying the branch already exists on the remote, someone else
-   has the same name — append today's date and push again, e.g.
-   `git push -u origin Jane_Doe_20260814`.
+10. When you're done (or time is up), push your branch to your fork:
+    ```
+    git push -u origin Jane_Doe
+    ```
+    (Replace `Jane_Doe` with your branch name. `origin` here is your own
+    fork, since that's what you cloned — you only need `-u origin
+    Jane_Doe` the first time; after that, plain `git push` is enough.)
 
-10. Tell your proctor/interviewer once you've pushed — that's your
-    submission. Only ever push to your own branch; never push to `main`.
+11. Open a Pull Request: on your fork's GitHub page you'll see a banner
+    offering to open a PR from your new branch. Click it, confirm the base
+    repository is `SkyeSenatla/SupportTicketDashboard_StarterPack` (base
+    branch `main`), title it with your name, and submit it. **That Pull
+    Request is your submission.** Tell your proctor/interviewer once it's
+    open. Remember: don't go looking at anyone else's PR.
 
 ## How to check your work
 
