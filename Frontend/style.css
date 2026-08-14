@@ -1,0 +1,155 @@
+/* ---------- Reset ---------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f4f5f7;
+  color: #1f2933;
+  line-height: 1.5;
+}
+
+/* ---------- Header ---------- */
+/* TODO: This header is stacking vertically instead of spreading the title
+   and filter buttons across one row. Add the layout property (and any
+   alignment properties you need) to fix it. */
+.dashboard-header {
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  background-color: #1f2933;
+  color: #ffffff;
+  padding: 16px 32px;
+}
+
+.dashboard-header h1 {
+  font-size: 1.5rem;
+}
+
+/* TODO: The filter buttons are stacking vertically instead of sitting in a row. */
+.filter-panel {
+  gap: 8px;
+}
+
+.filter-btn {
+  background-color: #3e4c59;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.filter-btn:hover {
+  background-color: #52606d;
+}
+
+.filter-btn.active {
+  background-color: #2563eb;
+}
+
+/* ---------- Main layout ---------- */
+.dashboard-main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 32px;
+}
+
+.reference-panel {
+  margin-bottom: 32px;
+}
+
+.reference-title {
+  font-size: 1rem;
+  color: #52606d;
+  margin-bottom: 8px;
+}
+
+/* TODO: Tickets are stacking in a single column instead of a responsive
+   grid. Add the layout property (and a template for the columns) so
+   cards flow into a multi-column grid that wraps as the window resizes. */
+.ticket-grid {
+  gap: 16px;
+}
+
+/* ---------- Ticket card ---------- */
+.ticket-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+}
+
+.ticket-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.ticket-title {
+  font-size: 1rem;
+}
+
+.ticket-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: #52606d;
+}
+
+/* ---------- Priority badges ---------- */
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* TODO: Give each priority badge a background-color and text color.
+   badge-critical should read clearly as the most urgent (e.g. red bg,
+   white text); badge-high, badge-medium and badge-low should step down
+   in urgency from there. */
+.badge-critical {
+}
+
+.badge-high {
+}
+
+.badge-medium {
+}
+
+.badge-low {
+}
+
+/* ---------- Status pills ---------- */
+.ticket-status {
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+}
+
+.status-open {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+
+.status-in-progress {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.status-closed {
+  background-color: #e5e7eb;
+  color: #374151;
+}
