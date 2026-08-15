@@ -6,7 +6,10 @@
   <title>Support Ticket Dashboard</title>
   <!-- TODO: This page is loading completely unstyled. Add the tag that
        links style.css so the browser picks up the stylesheet. -->
+       <link rel = "stylesheet" href ="style.css">
+      
 </head>
+
 <body>
 
   <header class="dashboard-header">
@@ -31,9 +34,10 @@
         <div class="ticket-card-header">
           <h3 class="ticket-title">Email server down</h3>
           <span>Critical</span>
+          <span class = "badge badge-critical"> Critical</span>
         </div>
         <div class="ticket-meta">
-          <span>Open</span>
+          <span class = "ticket-status">Open</span>
           <span class="ticket-date">2026-08-10</span>
         </div>
       </article>
@@ -50,5 +54,7 @@
        needs to go (here vs. <head>, with or without `defer`) given that
        script.js looks up elements like #ticket-container as soon as it
        runs. -->
+       <script src "script.js" ></script>
+        
 </body>
 </html>
