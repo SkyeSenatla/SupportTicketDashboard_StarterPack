@@ -91,6 +91,8 @@ public class TicketManager
     // so GetAllTickets() returns a defensive copy instead.
     public List<Ticket> GetAllTickets()
     {
+        var _tickets = new List<Ticket>
+          
         return _tickets;
     }
 
@@ -100,6 +102,14 @@ public class TicketManager
         var result = new List<Ticket>();
         // TODO: Loop through _tickets and add any ticket with PriorityLevel
         // "Critical" or "High" to result.
+        for (result == 0 || result == 1)
+
+            if(result == 0)
+            Console.WriteLine("Critical");
+
+            else if(result >=1)
+            Console.WriteLine("High");
+        
         return result;
     }
 
@@ -117,6 +127,8 @@ public class TicketManager
     {
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by CreatedDate, newest first.
+        if(ticket == PriorityRank)
+        result.Sort((ticket) => ticket.created);
         return sorted;
     }
 
@@ -129,6 +141,13 @@ public class TicketManager
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by PriorityRank[t.PriorityLevel] ascending,
         // then by CreatedDate descending within the same priority.
+          
+         
+        if(ticket == PriorityOrder)
+        { 
+            result = ticket.ascending;
+        }
+       result.Sort(ticket => ticket.CreatedDate.descending);
         return sorted;
     }
 
@@ -139,6 +158,7 @@ public class TicketManager
     public double GetAverageResolutionDays()
     {
         // TODO: Implement using LINQ.
+        
         return 0;
     }
 
@@ -149,6 +169,7 @@ public class TicketManager
     {
         // TODO: Implement. Remember AssignedTo can itself be null - don't
         // let a null AssignedTo blow up your comparison.
+
         return new List<Ticket>();
     }
 
@@ -191,6 +212,12 @@ public class TicketManager
     {
         return new List<Ticket>();
     }
+    //
+    //
+
+    //
+    //
+    //
 
     // Returns a NEW list of ticket copies for every SLA-breaching ticket
     // (see GetSlaBreaches), with each copy's PriorityLevel bumped one step
@@ -204,3 +231,4 @@ public class TicketManager
         return new List<Ticket>();
     }
 }
+
