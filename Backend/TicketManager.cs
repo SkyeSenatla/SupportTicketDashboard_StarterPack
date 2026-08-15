@@ -1,3 +1,4 @@
+using system.LINQ
 namespace TicketDashboard;
 
 public class TicketManager
@@ -100,6 +101,14 @@ public class TicketManager
         var result = new List<Ticket>();
         // TODO: Loop through _tickets and add any ticket with PriorityLevel
         // "Critical" or "High" to result.
+        //result = _tickets.orderby(t => t.PriorityLevel == "Critical" || t.PriorityLevel == "High");
+        foreach (Ticket ticket in _tickets)
+        {
+            if (ticket.PriorityLevel == "Critical" || ticket.PriorityLevel == "High")
+            {
+                result.add(ticket);
+            }
+        }
         return result;
     }
 
@@ -109,6 +118,8 @@ public class TicketManager
     public Dictionary<string, int> GetTicketCountsByStatus()
     {
         var counts = new Dictionary<string, int>();
+        counts = _tickets.GroupBy(t => t.ToDictionary())
+
         return counts;
     }
 
@@ -117,6 +128,7 @@ public class TicketManager
     {
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by CreatedDate, newest first.
+        sorted = _tickets.sorted(t => t.CreatedDate);
         return sorted;
     }
 
@@ -128,7 +140,9 @@ public class TicketManager
     {
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by PriorityRank[t.PriorityLevel] ascending,
+        sorted = _tickets.orderby(t => t.PriorityRank[t.PriorityLevel]);
         // then by CreatedDate descending within the same priority.
+        sorted = sorted.SortTicketsByDate();
         return sorted;
     }
 
@@ -138,8 +152,33 @@ public class TicketManager
     // zero!).
     public double GetAverageResolutionDays()
     {
-        // TODO: Implement using LINQ.
-        return 0;
+        int countDays = 0;
+        int iNumTicket = 0;
+        int iTotalDay = 0;
+        double avgDays = 0;
+         if (!_tickets.contains(t => t.status == "Closed"))
+         {
+             // TODO: Implement using LINQ.
+            foreach (Ticket ticket in _tickets)
+            {
+                if (ticket.status == "Closed")
+                {
+                    countDays = ticket.ClosedDate - ticket.CreatedDate;
+                    iTotalDay += countDays;
+                    iNumTicket++;
+
+                }
+            }
+
+            avgDays = iTotalDay/iNumTicket;
+            return avgDays;
+
+
+         }
+         else
+            return 0;
+       
+        
     }
 
     // Returns tickets assigned to the given person (case-insensitive match
@@ -149,7 +188,22 @@ public class TicketManager
     {
         // TODO: Implement. Remember AssignedTo can itself be null - don't
         // let a null AssignedTo blow up your comparison.
-        return new List<Ticket>();
+
+        if (!assignee == null)
+        {
+            List<Ticket> _assigneeList = new List<Ticket>();
+            foreach (Ticket ticket in _tickets)
+            {
+                if (ticket.assignee == assignee)
+                {
+                    _assigneeList.add(ticket);
+                }
+                    
+            }
+            return _assigneeList;
+        }
+        else
+            return new List<Ticket>();
     }
 
     // Returns tickets where the keyword (case-insensitive) appears in the
@@ -158,6 +212,15 @@ public class TicketManager
     {
         // TODO: Implement using LINQ. You'll need Any() to look inside the
         // Tags and Comments collections on each ticket.
+        if (!keyword == null)
+        {
+            List<Ticket> _SearchedTicket = new List<Ticket>();
+            _SearchedTicket = _tickets.Sort(t => t.any(t.Title.contains(keyword)));
+
+            return _SearchedTicket;
+
+        }
+        else
         return new List<Ticket>();
     }
 
@@ -174,7 +237,7 @@ public class TicketManager
         var result = new List<Ticket>();
         foreach (var ticket in _tickets)
         {
-            if (ticket.Status != "closed")
+            if (ticket.Status != "Closed")
             {
                 result.Add(ticket);
             }
@@ -189,7 +252,41 @@ public class TicketManager
     // TODO: Implement.
     public List<Ticket> GetSlaBreaches(DateTime asOf)
     {
-        return new List<Ticket>();
+        List<Ticket> _breachedTickets = new List<Ticket>();
+        foreach (Ticket ticket in _tickets)
+        {   
+            if (!ticket.status == Closed)
+            {
+                int iTimeSince = asOf - ticket.created
+
+                if (ticket.PriorityLevel == "Critical" && (iTimeSince/24) > 4)
+                {
+                    _breachedTickets.add(ticket);
+                }
+                if (ticket.PriorityLevel == "High" && (iTimeSince/24) > 48)
+                {
+                    _breachedTickets.add(ticket);
+                }
+                if (ticket.PriorityLevel == "Medium" && (iTimeSince) > 5)
+                {
+                    _breachedTickets.add(ticket);
+                }
+                if (ticket.PriorityLevel == "Low" && (iTimeSince) > 10)
+                {
+                    _breachedTickets.add(ticket);
+                }
+
+
+            }
+
+        }
+
+        if (!_breachedTickets.count() == 0)
+        {
+            return _breachedTickets;
+        }
+        else
+            return new List<Ticket>();
     }
 
     // Returns a NEW list of ticket copies for every SLA-breaching ticket
@@ -201,6 +298,29 @@ public class TicketManager
     // TODO: Implement.
     public List<Ticket> GetEscalatedTickets(DateTime asOf)
     {
+        List<Ticket> _escalteTickets = new List<Ticket>();
+        if (!GetSlaBreaches(asOf) == null)
+        {
+            _escalteTickets = GetSlaBreaches(asOf);
+
+            foreach (Ticket ticket in _tickets)
+            {
+                if (ticket.PriorityLevel == "High")
+                {
+                    ticket.PriorityLevel = "Critial";
+                }
+                if (ticket.PriorityLevel == "Medium")
+                {
+                    ticket.PriorityLevel = "High";
+                }
+                if (ticket.PriorityLevel == "Low")
+                {
+                    ticket.PriorityLevel = "Medium";
+                }
+            }
+
+            return _escalteTickets;
+        }
         return new List<Ticket>();
     }
 }

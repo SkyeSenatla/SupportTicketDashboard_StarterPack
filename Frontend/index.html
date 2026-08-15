@@ -6,9 +6,11 @@
   <title>Support Ticket Dashboard</title>
   <!-- TODO: This page is loading completely unstyled. Add the tag that
        links style.css so the browser picks up the stylesheet. -->
+       <link href="/Frontend/style.css"/>
+  
 </head>
-<body>
-
+<body >
+<script href="script.js"></script>
   <header class="dashboard-header">
     <h1>Support Ticket Dashboard</h1>
     <nav class="filter-panel">
@@ -27,7 +29,7 @@
            .ticket-card / .ticket-card-header / .badge / .badge-critical /
            .ticket-status / .ticket-meta rules in style.css as your guide,
            add the classes needed so this card matches the styled cards below it. -->
-      <article data-status="Open" data-priority="Critical">
+      <article data-status="Open" data-priority="Critical" class="badge-critical">
         <div class="ticket-card-header">
           <h3 class="ticket-title">Email server down</h3>
           <span>Critical</span>
@@ -50,5 +52,6 @@
        needs to go (here vs. <head>, with or without `defer`) given that
        script.js looks up elements like #ticket-container as soon as it
        runs. -->
+       
 </body>
 </html>
