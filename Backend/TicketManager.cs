@@ -91,7 +91,8 @@ public class TicketManager
     // so GetAllTickets() returns a defensive copy instead.
     public List<Ticket> GetAllTickets()
     {
-        return _tickets;
+       var tickets = List<Ticket>(_tickets);
+        return tickets;
     }
 
     // Returns only tickets whose PriorityLevel is "Critical" or "High".
@@ -100,6 +101,13 @@ public class TicketManager
         var result = new List<Ticket>();
         // TODO: Loop through _tickets and add any ticket with PriorityLevel
         // "Critical" or "High" to result.
+        foreach(var t in _tickets){
+            if(t.PriorityLevel == "Critical" || t.PriorityLevel == "High")
+            {
+                result.Add(t);
+            }
+            return null;
+        }
         return result;
     }
 
@@ -109,7 +117,11 @@ public class TicketManager
     public Dictionary<string, int> GetTicketCountsByStatus()
     {
         var counts = new Dictionary<string, int>();
-        return counts;
+        if(_tickets.Status != null) {
+            counts(c => c.Id == _tickets.Id).GroupBy(_tickets.Status);
+            return counts;
+        }
+        return null;
     }
 
     // Returns tickets sorted newest to oldest by CreatedDate.
@@ -117,6 +129,18 @@ public class TicketManager
     {
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by CreatedDate, newest first.
+        stored = stored.Sort(_tickets.CreatedDate);
+        //sorted.Sort(CreatedDate).ascending;
+        
+        for(int i=0; i > sorted.Length; i++) 
+        {
+            for(int j=1; i > sorted.Length; i++)
+            {
+                if(sorted[i].CreatedDate < sorted[j].CreatedDate)
+                {
+                    sorted.Sort(_tickets.CreatedDate)
+                }
+            }
         return sorted;
     }
 
@@ -129,6 +153,11 @@ public class TicketManager
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by PriorityRank[t.PriorityLevel] ascending,
         // then by CreatedDate descending within the same priority.
+        if(_tickets.PriorityLevel == null) return;
+        for(int i = 0; i < sorted.Length; i++){
+            sorted.Sort(_tickets.PriorityRank).ascending;
+            sorted.SortTicketsByDate();
+        }
         return sorted;
     }
 
@@ -139,6 +168,17 @@ public class TicketManager
     public double GetAverageResolutionDays()
     {
         // TODO: Implement using LINQ.
+        var list = new List<Ticket>(_tickets);
+        if(_tickets.ClosedDate != null)
+        {
+            for(int i=0; i < list.Length; i++)
+            {
+                var total_days = _tickets.ClosedDate.days - _tickets.CreatedDate.days;
+            } 
+            var avg_days = (total_days / _tickets.Counts);
+            return avg_days;
+        }
+    
         return 0;
     }
 
@@ -149,6 +189,16 @@ public class TicketManager
     {
         // TODO: Implement. Remember AssignedTo can itself be null - don't
         // let a null AssignedTo blow up your comparison.
+        foreach (var t in _tickets) {
+            if(_tickets.AssignedTo.Contains(assignee))
+                {
+                    return t;
+                }
+            else if (_tickets.AssignedTo == null || _tickets.AssignedTo == "") 
+                {
+                    return;
+                }
+        }
         return new List<Ticket>();
     }
 
@@ -158,6 +208,18 @@ public class TicketManager
     {
         // TODO: Implement using LINQ. You'll need Any() to look inside the
         // Tags and Comments collections on each ticket.
+        var list = new List<_tickets>();
+        foreach(var ticket in list){
+            if(var t => t.Title.Any() == keyword) {
+            return t;
+        }
+        else if(var t => t.Tags.Any() == keyword) {
+            return t;
+        }
+        else if(var c => c.Comments.Any() == keyword) {
+            return c;
+        }
+        }
         return new List<Ticket>();
     }
 
@@ -174,7 +236,7 @@ public class TicketManager
         var result = new List<Ticket>();
         foreach (var ticket in _tickets)
         {
-            if (ticket.Status != "closed")
+            if (ticket.Status != "Closed")
             {
                 result.Add(ticket);
             }

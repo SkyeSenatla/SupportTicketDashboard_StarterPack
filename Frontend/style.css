@@ -20,10 +20,12 @@ body {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  flex-direction: column;
   gap: 12px;
   background-color: #1f2933;
   color: #ffffff;
   padding: 16px 32px;
+  text-align: left;
 }
 
 .dashboard-header h1 {
@@ -32,7 +34,10 @@ body {
 
 /* TODO: The filter buttons are stacking vertically instead of sitting in a row. */
 .filter-panel {
+  flex-direction: column;
+  align-items: flex-end;
   gap: 8px;
+  margin-right: 2px;
 }
 
 .filter-btn {
@@ -74,7 +79,10 @@ body {
    grid. Add the layout property (and a template for the columns) so
    cards flow into a multi-column grid that wraps as the window resizes. */
 .ticket-grid {
+  flex-direction: column;
   gap: 16px;
+  margin: 0 auto;
+  grid-column: auto;
 }
 
 /* ---------- Ticket card ---------- */
@@ -121,15 +129,23 @@ body {
    white text); badge-high, badge-medium and badge-low should step down
    in urgency from there. */
 .badge-critical {
+  background-color: red;
+  color: #ffffff;
 }
 
 .badge-high {
+  background-color: orange;
+  color: white;
 }
 
 .badge-medium {
+  background-color: yellow;
+  color: black;
 }
 
 .badge-low {
+  background-color: green;
+  color: white;
 }
 
 /* ---------- Status pills ---------- */
