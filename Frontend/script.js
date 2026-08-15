@@ -42,7 +42,20 @@ function renderTickets(ticketsToRender) {
     // TODO: Dynamic styling - use getBadgeClass(ticket.priorityLevel) and
     // getStatusClass(ticket.status) to add the correct classes to the
     // badge and status elements so they're colored based on the ticket's data.
+
+
+   
   });
+   return <article class="ticket-card">
+         <div class="ticket-card-header">
+           <h3 class="ticket-title">...</h3>
+           <span class="badge ...">...</span>
+         </div>
+         <div class="ticket-meta">
+           <span class="ticket-status ...">...</span>
+           <span class="ticket-date">...</span>
+         </div>
+       </article>
 }
 
 function setActiveButton(activeId) {
@@ -82,7 +95,17 @@ renderTickets(tickets);
 // { "Open": 4, "In Progress": 2, "Closed": 2 }.
 // TODO: Implement using reduce(), not a manual loop.
 function getTicketCountsByStatus(ticketsToCount) {
-  return {};
+  var result;
+ return ticketsToCount.map(t=>{
+    if(result[t.status]!=null){
+let count=result[t.status];
+      result[t.status]=count++;
+    }else{
+      result[t.status]=1;
+    }
+
+  })
+  
 }
 
 // Returns a NEW array ordered by urgency first (Critical, then High, then
@@ -99,6 +122,7 @@ function sortTicketsByPriorityThenDate(ticketsToSort) {
 // excluded. Return 0 if there are no closed tickets (don't divide by zero!).
 // TODO: Implement.
 function getAverageResolutionDays(ticketsToAverage) {
+  
   return 0;
 }
 
@@ -108,7 +132,13 @@ function getAverageResolutionDays(ticketsToAverage) {
 // TODO: Implement. Remember assignedTo can itself be null - don't let a
 // null assignedTo blow up your comparison.
 function getTicketsByAssignee(ticketsToFilter, assignee) {
-  return [];
+  let result =[];
+  if(assignee!=null){
+
+    result = ticketsToFilter.filter(t=>t.assignedTo.toUpperCase().includes(assignee.toUpperCase()));
+  }
+
+  return result;
 }
 
 // Returns tickets where the keyword (case-insensitive) appears in the
@@ -116,7 +146,8 @@ function getTicketsByAssignee(ticketsToFilter, assignee) {
 // TODO: Implement. You'll need some() to look inside the tags and comments
 // arrays on each ticket.
 function searchTickets(ticketsToSearch, keyword) {
-  return [];
+  let result = ticketsToSearch.filter(t=>t.title.toUpperCase().includes(keyword.toUpperCase()));
+  return result;
 }
 
 // Returns a NEW array of tickets sorted newest to oldest by createdDate.
