@@ -223,7 +223,7 @@ public class TicketManager
             {
                 if(asOf - CreatedDate > SlaThresholds)
                 {
-                    ticket.Add(Ticket);
+                    ticket.Add();
                 }
             }
         }
@@ -239,7 +239,7 @@ public class TicketManager
     // TODO: Implement.
     public List<Ticket> GetEscalatedTickets(DateTime asOf)
     {
-        vat tickets = new List<Ticket>(GetSlaBreaches);
+        var tickets = new List<Ticket>(GetSlaBreaches);
         return new List<Ticket>();
     }
 }
