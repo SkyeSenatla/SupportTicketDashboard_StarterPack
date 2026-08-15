@@ -25,30 +25,45 @@ function renderTickets(ticketsToRender) {
   const container = document.getElementById("ticket-container");
   container.innerHTML = "";
 
-  ticketsToRender.forEach(ticket => {
+  let ticketsHTML = "";
+
     // TODO: Build the ticket card DOM structure and append it to `container`.
     // Match the structure of the "Example Ticket Card" in index.html:
-    //   <article class="ticket-card">
-    //     <div class="ticket-card-header">
-    //       <h3 class="ticket-title">...</h3>
-    //       <span class="badge ...">...</span>
-    //     </div>
-    //     <div class="ticket-meta">
-    //       <span class="ticket-status ...">...</span>
-    //       <span class="ticket-date">...</span>
-    //     </div>
-    //   </article>
-    //
+   
+    
     // TODO: Dynamic styling - use getBadgeClass(ticket.priorityLevel) and
     // getStatusClass(ticket.status) to add the correct classes to the
     // badge and status elements so they're colored based on the ticket's data.
+ 
+
+  ticketsToRender.forEach(ticket => {
+
+    ticketsHTML = ticketsHTML +  `
+       <article class="ticket-card">
+        
+        <div class="ticket-card-header">
+          <h3 class="ticket-title">${ticket.title}</h3>
+          <span class="${getBadgeClass(ticket.priorityLevel)}">${ticket.priorityLevel}</span>
+        </div>
+        <div class="ticket-meta">
+          <span class="${getStatusClass(ticket.status)}">${ticket.status}</span>
+          <span class="ticket-date">${ticket.createdDate}</span>
+        </div>
+      </article>
+    `
+
+   
   });
+
+  container.innerHTML = ticketsHTML
 }
 
 function setActiveButton(activeId) {
+  
   document.querySelectorAll(".filter-btn").forEach(btn => {
     btn.classList.remove("active");
   });
+  
   document.getElementById(activeId).classList.add("active");
 }
 
@@ -56,6 +71,8 @@ function showAllTickets() {
   renderTickets(tickets);
   setActiveButton("filter-all");
 }
+
+
 
 function showCriticalTickets() {
   renderTickets(tickets.filter(t => t.priorityLevel === "Critical"));
@@ -71,7 +88,33 @@ function showOpenTickets() {
 // #filter-open) with click listeners that call showAllTickets(),
 // showCriticalTickets() and showOpenTickets() respectively.
 
+
+ document.querySelectorAll(".filter-btn").forEach(button=>{
+    button.addEventListener('click',()=>{
+      // console.log("Button Clinked");
+      
+      const buttonCategoryName = button.dataset.buttonStatus 
+
+     
+      if(buttonCategoryName === "show-critical"){
+        showCriticalTickets();
+      }
+
+      else if (buttonCategoryName === "show-open"){
+        showOpenTickets();
+      }
+
+      else{
+        showAllTickets();
+      }
+      
+
+    })
+ })
+
+
 renderTickets(tickets);
+
 
 // ---------------------------------------------------------------------
 // The functions below aren't wired to any button - they're pure data
@@ -82,7 +125,38 @@ renderTickets(tickets);
 // { "Open": 4, "In Progress": 2, "Closed": 2 }.
 // TODO: Implement using reduce(), not a manual loop.
 function getTicketCountsByStatus(ticketsToCount) {
-  return {};
+
+  let openTickets = [];
+  let inProgressTickets = [];
+  let closedTickets = [];
+
+  let response ;
+
+  ticketsToCount.forEach((ticket)=>{
+
+    if(ticket.status.toLowerCase() === "open"){
+      openTickets.push(ticket);
+    }
+
+    else if (ticket.status.toLowerCase() === "closed"){
+      closedTickets.push(ticket);
+
+    }
+
+    else if (ticket.status.toLowerCase() === "in progress"){
+      inProgressTickets.push(ticket);
+
+    }
+
+     response = {
+      open : openTickets.length,
+      ['In-Progress'] : inProgressTickets.length,
+      closed : closedTickets.length
+    }
+
+  })
+
+ return response;
 }
 
 // Returns a NEW array ordered by urgency first (Critical, then High, then
@@ -99,6 +173,7 @@ function sortTicketsByPriorityThenDate(ticketsToSort) {
 // excluded. Return 0 if there are no closed tickets (don't divide by zero!).
 // TODO: Implement.
 function getAverageResolutionDays(ticketsToAverage) {
+
   return 0;
 }
 
@@ -108,8 +183,23 @@ function getAverageResolutionDays(ticketsToAverage) {
 // TODO: Implement. Remember assignedTo can itself be null - don't let a
 // null assignedTo blow up your comparison.
 function getTicketsByAssignee(ticketsToFilter, assignee) {
-  return [];
+
+  let response = [];
+
+  if(!assignee){
+
+    response = ticketsToFilter.filter(ticket => ticket.assignedTo === null)
+    return response;
+  }
+
+  else{
+
+    response = ticketsToFilter.filter(ticket => ticket.assignedTo === assignee)
+
+    return response;
+  }
 }
+
 
 // Returns tickets where the keyword (case-insensitive) appears in the
 // title, in any of the ticket's tags, or in the text of any comment.
@@ -128,6 +218,7 @@ function searchTickets(ticketsToSearch, keyword) {
 // from scratch.
 function getTicketsSortedByDate(ticketsToSort) {
   ticketsToSort.sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
+  
   return ticketsToSort;
 }
 
@@ -157,3 +248,6 @@ console.log("=== Tickets Sorted Newest To Oldest ===");
 getTicketsSortedByDate(tickets).forEach(t => console.log(`${t.createdDate} - #${t.id} ${t.title}`));
 console.log("=== Ticket Order After Sorting By Date (should still be #1..#8) ===");
 console.log(tickets.map(t => t.id).join(", "));
+
+
+// console.log("Script loaded successfully!!! ");
