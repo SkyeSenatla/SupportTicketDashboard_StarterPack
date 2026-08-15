@@ -6,6 +6,7 @@
   <title>Support Ticket Dashboard</title>
   <!-- TODO: This page is loading completely unstyled. Add the tag that
        links style.css so the browser picks up the stylesheet. -->
+       <link>
 </head>
 <body>
 
@@ -23,17 +24,15 @@
     <!-- Reference example card: fixed structure/markup used to test raw HTML + CSS skills -->
     <section class="reference-panel">
       <h2 class="reference-title">Example Ticket Card</h2>
-      <!-- TODO: This card is missing the classes style.css expects. Using the
-           .ticket-card / .ticket-card-header / .badge / .badge-critical /
-           .ticket-status / .ticket-meta rules in style.css as your guide,
-           add the classes needed so this card matches the styled cards below it. -->
-      <article data-status="Open" data-priority="Critical">
+      
+           
+      <article class="ticket-card" data-status="Open" data-priority="Critical" >
         <div class="ticket-card-header">
           <h3 class="ticket-title">Email server down</h3>
-          <span>Critical</span>
+          <span class="ticket-status">Critical</span>
         </div>
         <div class="ticket-meta">
-          <span>Open</span>
+          <span class="status-open">Open</span>
           <span class="ticket-date">2026-08-10</span>
         </div>
       </article>
@@ -50,5 +49,9 @@
        needs to go (here vs. <head>, with or without `defer`) given that
        script.js looks up elements like #ticket-container as soon as it
        runs. -->
+       <script>
+
+
+       </script>
 </body>
 </html>
