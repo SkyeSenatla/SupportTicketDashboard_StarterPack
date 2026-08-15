@@ -121,15 +121,33 @@ body {
    white text); badge-high, badge-medium and badge-low should step down
    in urgency from there. */
 .badge-critical {
+  background-color: red;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 7px;
+  text-align: center;
 }
 
 .badge-high {
+  background-color: red;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 7px;
+
 }
 
 .badge-medium {
+  background-color: orange;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 7px;
 }
 
 .badge-low {
+  background-color: green;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 7px;
 }
 
 /* ---------- Status pills ---------- */
@@ -142,14 +160,20 @@ body {
 .status-open {
   background-color: #dbeafe;
   color: #1d4ed8;
+  padding: 3px 5px;
+  border-radius: 7px;
 }
 
 .status-in-progress {
   background-color: #fef3c7;
   color: #92400e;
+  padding: 3px 5px;
+  border-radius: 7px;
 }
 
 .status-closed {
   background-color: #e5e7eb;
   color: #374151;
+  padding: 3px 5px;
+  border-radius: 7px;
 }
