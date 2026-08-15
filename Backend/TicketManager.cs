@@ -145,6 +145,9 @@ public class TicketManager
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by PriorityRank[t.PriorityLevel] ascending,
         // then by CreatedDate descending within the same priority.
+        
+         
+        result.Sort((PriorityOrder) => a.CreatedDate.CompareTo(b.CreatedDate));
         if(sorted == "Crital")
         {
             return sorted;
@@ -164,7 +167,7 @@ public class TicketManager
         else{
             CreatedDate 
         }
-        
+        return result; 
 }
       
     }
