@@ -23,7 +23,7 @@ function getStatusClass(status) {
 
 function renderTickets(ticketsToRender) {
   const container = document.getElementById("ticket-container");
-  container.innerHTML = "";
+  container.innerHTML = section;
 
   ticketsToRender.forEach(ticket => {
     // TODO: Build the ticket card DOM structure and append it to `container`.
@@ -38,10 +38,22 @@ function renderTickets(ticketsToRender) {
     //       <span class="ticket-date">...</span>
     //     </div>
     //   </article>
-    //
+    
     // TODO: Dynamic styling - use getBadgeClass(ticket.priorityLevel) and
     // getStatusClass(ticket.status) to add the correct classes to the
     // badge and status elements so they're colored based on the ticket's data.
+    
+      <article data-status="Open" data-priority="Critical">
+        <div class="ticket-card-header">
+          <h3 class="ticket-title">ticket.title</h3>
+          <span class="badge-critical">ticket.priorityLevel</span>
+        </div>
+        <div class="ticket-meta">
+          <span class="status-open">ticket.status</span>
+          <span class="ticket-date">ticket.createdDate</span>
+        </div>
+      </article>
+
   });
 }
 
