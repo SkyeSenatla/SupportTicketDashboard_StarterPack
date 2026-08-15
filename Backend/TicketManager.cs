@@ -89,8 +89,9 @@ public class TicketManager
     // list, so anything a caller does to the returned list (Add, Remove,
     // Clear, Sort...) mutates TicketManager's internal state too. Fix this
     // so GetAllTickets() returns a defensive copy instead.
-    public List<Ticket> GetAllTickets()
-    {
+    private List<Ticket> GetAllTickets()
+    {   
+         
         return _tickets;
     }
 
