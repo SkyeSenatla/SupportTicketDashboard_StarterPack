@@ -91,16 +91,26 @@ public class TicketManager
     // so GetAllTickets() returns a defensive copy instead.
     public List<Ticket> GetAllTickets()
     {
+        for(ticket=0;ticket>=4;ticket ++;)
+       
         return _tickets;
     }
 
     // Returns only tickets whose PriorityLevel is "Critical" or "High".
     public List<Ticket> GetHighPriorityTickets()
     {
-        var result = new List<Ticket>();
+        var result = new List<GetHighPriorityTickets>();
         // TODO: Loop through _tickets and add any ticket with PriorityLevel
         // "Critical" or "High" to result.
-        return result;
+
+        foreach (var ticket in _tickets)
+        {
+            if (ticket.Status = "t.PriorityLevel")
+            {
+                result.Add(ticket);
+            }
+        }
+       
     }
 
     // Counts tickets per status into a Dictionary<string, int>.
@@ -109,14 +119,29 @@ public class TicketManager
     public Dictionary<string, int> GetTicketCountsByStatus()
     {
         var counts = new Dictionary<string, int>();
+   
+       
+        foreach (var ticket in _tickets)
+        {
+            if (ticket.Status = "t.GetTicketByStatus")
+            {
+                result.Add(ticket);
+            }
+            var sorted = new List<Ticket>(_tickets);
+        
+        ticketsToSort.sort((a, b) => new Status(a.Status) - new Status(b.Status));
         return counts;
-    }
+        }
+    
+ }
 
     // Returns tickets sorted newest to oldest by CreatedDate.
     public List<Ticket> SortTicketsByDate()
     {
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by CreatedDate, newest first.
+        ticketsToSort.sort((a, b) => new Date(a.createdDate) - new Date(b.createdDate));
+      
         return sorted;
     }
 
@@ -127,8 +152,20 @@ public class TicketManager
     public List<Ticket> SortTicketsByPriorityThenDate()
     {
         var sorted = new List<Ticket>(_tickets);
-        // TODO: Sort `sorted` by PriorityRank[t.PriorityLevel] ascending,
+       
+        foreach (var ticket in _tickets)
+        {
+            if (ticket.Status = "t.PriorityLevel")
+            {
+                result.Add(ticket);
+            }
+        
+         // TODO: Sort `sorted` by PriorityRank[t.PriorityLevel] ascending,
         // then by CreatedDate descending within the same priority.
+        ticketsToSort.sort((a, b) => new PriorityRank(b.PriorityRank) - new Date(a.Date));
+        
+        }
+       
         return sorted;
     }
 
@@ -136,10 +173,22 @@ public class TicketManager
     // for tickets that have been closed. Tickets without a ClosedDate must
     // be excluded. Return 0 if there are no closed tickets (don't divide by
     // zero!).
+    
     public double GetAverageResolutionDays()
     {
+        var result = new List<Ticket>();
+
+        foreach (var ticket in _tickets)
+        {
+            if (CreatedDate && ClosedDate)
+            {
+                result averageDate;
+            }
+        
+        
         // TODO: Implement using LINQ.
-        return 0;
+        else return 0;
+        }
     }
 
     // Returns tickets assigned to the given person (case-insensitive match
@@ -149,7 +198,17 @@ public class TicketManager
     {
         // TODO: Implement. Remember AssignedTo can itself be null - don't
         // let a null AssignedTo blow up your comparison.
-        return new List<Ticket>();
+       
+        foreach (var ticket in _tickets)
+        {
+            if (ticket.assignee!=null)
+            {
+                ticket=assignee
+            }
+        
+        
+      else   Console.Readline(give me unassigned ticket: "ticket");
+        }
     }
 
     // Returns tickets where the keyword (case-insensitive) appears in the
@@ -158,6 +217,14 @@ public class TicketManager
     {
         // TODO: Implement using LINQ. You'll need Any() to look inside the
         // Tags and Comments collections on each ticket.
+        var result = new List<Ticket>();
+        foreach (var ticket in _tickets)
+        {
+            if (ticket.keyword)
+            {
+                result.Add(ticket);
+            }
+        }
         return new List<Ticket>();
     }
 
@@ -179,7 +246,7 @@ public class TicketManager
                 result.Add(ticket);
             }
         }
-        result.Sort((a, b) => a.CreatedDate.CompareTo(b.CreatedDate));
+        result.Sort((a, b) => b.CreatedDate.CompareTo(a.CreatedDate));
         return result;
     }
 
@@ -189,7 +256,20 @@ public class TicketManager
     // TODO: Implement.
     public List<Ticket> GetSlaBreaches(DateTime asOf)
     {
-        return new List<Ticket>();
+         
+    {
+        var result = new List<Ticket>();
+        foreach (var ticket in _tickets)
+        {
+            if (ticket.Status >=SlaThresholds)
+            {
+                result.Add(ticket);
+            }
+        }
+      
+        
+    }
+        return ticket;
     }
 
     // Returns a NEW list of ticket copies for every SLA-breaching ticket
@@ -201,6 +281,15 @@ public class TicketManager
     // TODO: Implement.
     public List<Ticket> GetEscalatedTickets(DateTime asOf)
     {
-        return new List<Ticket>();
+        var result = new List<Ticket>();
+        foreach (var ticket in _tickets)
+        {
+            if (ticket.Status ="PriorityOrder")
+            {
+                result.Add(ticket);
+            }
+        }
+        
+        return result;
     }
 }
