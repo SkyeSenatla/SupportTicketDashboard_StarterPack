@@ -33,6 +33,7 @@ body {
 /* TODO: The filter buttons are stacking vertically instead of sitting in a row. */
 .filter-panel {
   gap: 8px;
+  flex-wrap: wrap;
   padding: 16px 32px;
 }
 
