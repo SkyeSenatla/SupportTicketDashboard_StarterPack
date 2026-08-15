@@ -117,6 +117,11 @@ public class TicketManager
         var counts = new Dictionary<string, int>();
         return counts;
         GetAllTickets.
+        GetTicketCountsByStatus => count.s {
+            Open ;
+            Medium;
+            Low;
+        }
     }
 
     // Returns tickets sorted newest to oldest by CreatedDate.
