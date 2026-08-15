@@ -17,6 +17,7 @@ body {
    and filter buttons across one row. Add the layout property (and any
    alignment properties you need) to fix it. */
 .dashboard-header {
+  display:inline;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
@@ -32,6 +33,7 @@ body {
 
 /* TODO: The filter buttons are stacking vertically instead of sitting in a row. */
 .filter-panel {
+  display: flex;
   gap: 8px;
 }
 
@@ -74,6 +76,7 @@ body {
    grid. Add the layout property (and a template for the columns) so
    cards flow into a multi-column grid that wraps as the window resizes. */
 .ticket-grid {
+  display: grid;
   gap: 16px;
 }
 
@@ -121,15 +124,19 @@ body {
    white text); badge-high, badge-medium and badge-low should step down
    in urgency from there. */
 .badge-critical {
+  color: red
 }
 
 .badge-high {
+  color: orange
 }
 
 .badge-medium {
+  color: yellow
 }
 
 .badge-low {
+  color: green
 }
 
 /* ---------- Status pills ---------- */
