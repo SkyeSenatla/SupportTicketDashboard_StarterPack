@@ -91,6 +91,11 @@ public class TicketManager
     // so GetAllTickets() returns a defensive copy instead.
     public List<Ticket> GetAllTickets()
     {
+        var _tickets = new List<Ticket>();
+        foreach(var ticket in tickets)
+        {
+            _tickets.add(ticket);
+        }
         return _tickets;
     }
 
@@ -100,6 +105,17 @@ public class TicketManager
         var result = new List<Ticket>();
         // TODO: Loop through _tickets and add any ticket with PriorityLevel
         // "Critical" or "High" to result.
+        foreach (var ticket in _tickets)
+        {
+            if(ticket.PriorityRank == 0)
+            {
+                result.Add(ticket);
+            }
+            else if(ticket.PriorityRank == 1)
+            {
+                result.Add(ticket);
+            }
+        }
         return result;
     }
 
@@ -109,6 +125,7 @@ public class TicketManager
     public Dictionary<string, int> GetTicketCountsByStatus()
     {
         var counts = new Dictionary<string, int>();
+        
         return counts;
     }
 
@@ -116,7 +133,7 @@ public class TicketManager
     public List<Ticket> SortTicketsByDate()
     {
         var sorted = new List<Ticket>(_tickets);
-        // TODO: Sort `sorted` by CreatedDate, newest first.
+        
         return sorted;
     }
 
@@ -129,6 +146,17 @@ public class TicketManager
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by PriorityRank[t.PriorityLevel] ascending,
         // then by CreatedDate descending within the same priority.
+       
+        foreach (var ticket in _tickets)
+        {
+            if (ticket.PriorityRank >= 0)
+            {
+                sorted.Add(ticket);
+            }
+        }
+        sorted.Sort((a, b) => a.PriorityOrder.CompareTo(b.CreatedDate));
+        sorted.Sort((a,b) => a.CreatedDate.CompareTo(b.ClosedDate));
+       
         return sorted;
     }
 
@@ -174,7 +202,7 @@ public class TicketManager
         var result = new List<Ticket>();
         foreach (var ticket in _tickets)
         {
-            if (ticket.Status != "closed")
+            if (ticket.Status != "Closed")
             {
                 result.Add(ticket);
             }
@@ -189,6 +217,16 @@ public class TicketManager
     // TODO: Implement.
     public List<Ticket> GetSlaBreaches(DateTime asOf)
     {
+        foreach (var ticket in _tickets)
+        {
+            if(ticket.Status != "Closed")
+            {
+                if(asOf - CreatedDate > SlaThresholds)
+                {
+                    ticket.Add(Ticket);
+                }
+            }
+        }
         return new List<Ticket>();
     }
 
@@ -201,6 +239,7 @@ public class TicketManager
     // TODO: Implement.
     public List<Ticket> GetEscalatedTickets(DateTime asOf)
     {
+        vat tickets = new List<Ticket>(GetSlaBreaches);
         return new List<Ticket>();
     }
 }
