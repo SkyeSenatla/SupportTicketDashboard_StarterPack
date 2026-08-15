@@ -145,7 +145,25 @@ public class TicketManager
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by PriorityRank[t.PriorityLevel] ascending,
         // then by CreatedDate descending within the same priority.
-        return sorted;
+        if(sorted == "Crital")
+        {
+            return sorted;
+        }
+        else if (sorted == "High")
+        {
+            return sorted;
+        }
+        else if(sorted == "Medium")
+        {
+            return sorted;
+        }
+        else if(sorted == "Low")
+        (
+           return sorted;
+        )
+        
+}
+      
     }
 
     // Returns the average number of days between CreatedDate and ClosedDate
