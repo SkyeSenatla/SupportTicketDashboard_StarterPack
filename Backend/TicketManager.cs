@@ -123,7 +123,7 @@ public class TicketManager
     {
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by CreatedDate, newest first.
-        if(var > CreatedDate)
+        if(sorted  > CreatedDate)
         {
              return sorted;
         }
