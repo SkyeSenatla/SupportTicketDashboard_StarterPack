@@ -6,15 +6,16 @@
   <title>Support Ticket Dashboard</title>
   <!-- TODO: This page is loading completely unstyled. Add the tag that
        links style.css so the browser picks up the stylesheet. -->
+       <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
   <header class="dashboard-header">
     <h1>Support Ticket Dashboard</h1>
     <nav class="filter-panel">
-      <button id="filter-all" class="filter-btn active" type="button">Show All</button>
-      <button id="filter-critical" class="filter-btn" type="button">Show Critical</button>
-      <button id="filter-open" class="filter-btn" type="button">Show Open</button>
+      <button data-button-status = "filter-all" id="filter-all" class="filter-btn active" type="button">Show All</button>
+      <button data-button-status = "show-critical" id="filter-critical" class="filter-btn" type="button">Show Critical</button>
+      <button data-button-status = "show-open" id="filter-open" class="filter-btn" type="button">Show Open</button>
     </nav>
   </header>
 
@@ -27,10 +28,10 @@
            .ticket-card / .ticket-card-header / .badge / .badge-critical /
            .ticket-status / .ticket-meta rules in style.css as your guide,
            add the classes needed so this card matches the styled cards below it. -->
-      <article data-status="Open" data-priority="Critical">
+      <article class="ticket-card" data-status="Open" data-priority="Critical">
         <div class="ticket-card-header">
           <h3 class="ticket-title">Email server down</h3>
-          <span>Critical</span>
+          <span class="badge">Critical</span>
         </div>
         <div class="ticket-meta">
           <span>Open</span>
@@ -39,6 +40,8 @@
       </article>
     </section>
 
+    <div>
+ 
     <!-- Dynamic ticket list: populated at runtime by script.js -->
     <section id="ticket-container" class="ticket-grid" aria-live="polite">
     </section>
@@ -50,5 +53,7 @@
        needs to go (here vs. <head>, with or without `defer`) given that
        script.js looks up elements like #ticket-container as soon as it
        runs. -->
+
+       <script src="script.js"></script>
 </body>
 </html>
