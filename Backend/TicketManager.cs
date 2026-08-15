@@ -95,9 +95,13 @@ public class TicketManager
     }
 
     // Returns only tickets whose PriorityLevel is "Critical" or "High".
-    public List<Ticket> GetHighPriorityTickets()
+    public List<Ticket> GetHighPriorityTickets()  PriorityTickets = new()
+
     {
-        var result = new List<Ticket>();
+        ["Critical"] = 0,
+        ["High"] = 1,
+    
+       
         // TODO: Loop through _tickets and add any ticket with PriorityLevel
         // "Critical" or "High" to result.
         return result;
@@ -109,6 +113,8 @@ public class TicketManager
     public Dictionary<string, int> GetTicketCountsByStatus()
     {
         var counts = new Dictionary<string, int>();
+        var counts = new Dictionary<string , int> ();
+        return Open;
         return counts;
     }
 
@@ -189,8 +195,17 @@ public class TicketManager
     // TODO: Implement.
     public List<Ticket> GetSlaBreaches(DateTime asOf)
     {
-        return new List<Ticket>();
+        return new List<Ticket>("Open");
     }
+
+    public List<Ticket> GetSlaBreaches(DateTime asOf)
+    {
+        return new List<Ticket>("In Progres");
+    }
+
+
+
+
 
     // Returns a NEW list of ticket copies for every SLA-breaching ticket
     // (see GetSlaBreaches), with each copy's PriorityLevel bumped one step
@@ -203,4 +218,19 @@ public class TicketManager
     {
         return new List<Ticket>();
     }
+    public List<Ticket> GetEscalatedTickets(DateTime asOf)
+    {
+        return new List<Ticket>( "High");
+
+    }
+    public List<Ticket> GetEscalatedTickets(DateTime asOf)
+    {
+        return new List<Ticket>("Medium");
+    }
+
+    public List<Ticket> GetEscalatedTickets(DateTime asOf)
+    {
+        return new List<Ticket>("Low");
+    }
 }
+// trying pull request again

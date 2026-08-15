@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <div id="link"></div>
+  <div id="script"> ticket-container</div>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Support Ticket Dashboard</title>
   <!-- TODO: This page is loading completely unstyled. Add the tag that
        links style.css so the browser picks up the stylesheet. -->
+       <style> </style>
 </head>
 <body>
 
@@ -23,6 +26,7 @@
     <!-- Reference example card: fixed structure/markup used to test raw HTML + CSS skills -->
     <section class="reference-panel">
       <h2 class="reference-title">Example Ticket Card</h2>
+      <h3 class=" ticket-card">Ticket Card</h3>
       <!-- TODO: This card is missing the classes style.css expects. Using the
            .ticket-card / .ticket-card-header / .badge / .badge-critical /
            .ticket-status / .ticket-meta rules in style.css as your guide,
@@ -39,6 +43,9 @@
       </article>
     </section>
 
+
+
+
     <!-- Dynamic ticket list: populated at runtime by script.js -->
     <section id="ticket-container" class="ticket-grid" aria-live="polite">
     </section>
@@ -50,5 +57,6 @@
        needs to go (here vs. <head>, with or without `defer`) given that
        script.js looks up elements like #ticket-container as soon as it
        runs. -->
+       <script></script>
 </body>
 </html>

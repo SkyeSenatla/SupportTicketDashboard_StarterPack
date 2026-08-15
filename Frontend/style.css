@@ -24,6 +24,8 @@ body {
   background-color: #1f2933;
   color: #ffffff;
   padding: 16px 32px;
+  align-content: center;
+  text-align:justify;
 }
 
 .dashboard-header h1 {
@@ -33,6 +35,8 @@ body {
 /* TODO: The filter buttons are stacking vertically instead of sitting in a row. */
 .filter-panel {
   gap: 8px;
+ margin:auto;
+ grid-row: auto;
 }
 
 .filter-btn {
@@ -75,6 +79,8 @@ body {
    cards flow into a multi-column grid that wraps as the window resizes. */
 .ticket-grid {
   gap: 16px;
+  grid-column: auto;
+  
 }
 
 /* ---------- Ticket card ---------- */
@@ -121,15 +127,23 @@ body {
    white text); badge-high, badge-medium and badge-low should step down
    in urgency from there. */
 .badge-critical {
+  background-color: red;
+  text-emphasis-color: white;
 }
 
-.badge-high {
+.badge-high { background-color: red;
+  text-emphasis-color: white;
+
 }
 
-.badge-medium {
+.badge-medium { background-color:yellow;
+  text-emphasis-color: white;
 }
 
 .badge-low {
+  background-color:green;
+  text-emphasis-color: white;
+
 }
 
 /* ---------- Status pills ---------- */
