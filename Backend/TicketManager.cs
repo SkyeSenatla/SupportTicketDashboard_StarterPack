@@ -100,7 +100,12 @@ public class TicketManager
         var result = new List<Ticket>();
         // TODO: Loop through _tickets and add any ticket with PriorityLevel
         // "Critical" or "High" to result.
-        return result;
+        if(PriorityRank = "Crital" || "High")
+        {
+
+             return result;
+        }
+       
     }
 
     // Counts tickets per status into a Dictionary<string, int>.
