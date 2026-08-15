@@ -102,7 +102,7 @@ public class TicketManager
         // "Critical" or "High" to result.
         foreach (var ticket in _tickets)
         {
-            if (ticket.PriorityLevel == "Critical" OR ticket.PriorityLevel == "High")
+            if (ticket.PriorityLevel == "Critical" || ticket.PriorityLevel == "High")
             {
                 result.Add(ticket);
             }
