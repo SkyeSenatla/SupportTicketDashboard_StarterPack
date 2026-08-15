@@ -91,6 +91,14 @@ public class TicketManager
     // so GetAllTickets() returns a defensive copy instead.
     public List<Ticket> GetAllTickets()
     {
+        foreach (var ticket in _tickets)
+        {
+            if (ticket.Status == "Critical")
+            {
+                sorted.Add(ticket);
+            }
+          
+        }
         return _tickets;
     }
 
@@ -100,6 +108,12 @@ public class TicketManager
         var result = new List<Ticket>();
         // TODO: Loop through _tickets and add any ticket with PriorityLevel
         // "Critical" or "High" to result.
+        for ( int i=0; i < PriorityLevel.lenght; i++)
+        if (PriorityLevel =< 0){
+            result = "Critical";
+        }else {
+            result = "High";
+        }
         return result;
     }
 
@@ -109,14 +123,47 @@ public class TicketManager
     public Dictionary<string, int> GetTicketCountsByStatus()
     {
         var counts = new Dictionary<string, int>();
+        for ( int i=0; i<counts.lenght ; i++)
+
+        if (ticket.Status == "Open")
+        {
+            counts.Add(ticket);
+        }
+        else if (ticket.Status == "In Progress")
+        {
+            count.Add(ticket);
+        }
+        else 
+        {
+            count.Add(ticket);
+        }
         return counts;
-    }
+    }//end of statement
 
     // Returns tickets sorted newest to oldest by CreatedDate.
     public List<Ticket> SortTicketsByDate()
     {
         var sorted = new List<Ticket>(_tickets);
-        // TODO: Sort `sorted` by CreatedDate, newest first.
+        foreach (var ticket in _tickets)
+        {
+            if (ticket.Status == "Critical")
+            {
+                sorted.Add(ticket);
+            }
+            else if (ticket.Status == "High")
+            {
+                sorted.Add(ticket);
+            }
+            else if ( ticket.Status == "Medium")
+            {
+                sorted.Add(ticket);
+            }
+            else {
+                sorted.Add(ticket);
+            }
+        }
+        result.Sort((a, b) => a.CreatedDate.CompareTo(b.CreatedDate));
+        
         return sorted;
     }
 
@@ -124,9 +171,30 @@ public class TicketManager
     // Medium, then Low), and within the same priority, newest CreatedDate
     // first. Use the PriorityRank map above - sorting PriorityLevel as a
     // plain string will NOT give you the right order.
-    public List<Ticket> SortTicketsByPriorityThenDate()
+    public List<Ticket> SortTicketsByPriorityThenDate(string [] str)
     {
         var sorted = new List<Ticket>(_tickets);
+        var sorted = new List<Ticket>(_tickets);
+        foreach (var ticket in _tickets)
+        {
+            if (ticket.Status == "Critical")
+            {
+                sorted.Add(ticket);
+            }
+            else if (ticket.Status == "High")
+            {
+                sorted.Add(ticket);
+            }
+            else if ( ticket.Status == "Medium")
+            {
+                sorted.Add(ticket);
+            }
+            else {
+                sorted.Add(ticket);
+            }
+        }
+        result.Sort((a, b) => a.CreatedDate.CompareTo(b.CreatedDate));
+        
         // TODO: Sort `sorted` by PriorityRank[t.PriorityLevel] ascending,
         // then by CreatedDate descending within the same priority.
         return sorted;

@@ -19,3 +19,5 @@ public class Ticket
     public List<string> Tags { get; set; } = new();
     public List<Comment> Comments { get; set; } = new();
 }
+
+
