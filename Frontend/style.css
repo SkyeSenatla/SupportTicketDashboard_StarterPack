@@ -16,7 +16,7 @@ body {
 /* TODO: This header is stacking vertically instead of spreading the title
    and filter buttons across one row. Add the layout property (and any
    alignment properties you need) to fix it. */
-.dashboard-header {
+.dashboard-header , .h1 , .filter-panel {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
@@ -26,13 +26,14 @@ body {
   padding: 16px 32px;
 }
 
-.dashboard-header h1 {
+.dashboard-header h1, .filter-panel   {
   font-size: 1.5rem;
 }
 
 /* TODO: The filter buttons are stacking vertically instead of sitting in a row. */
 .filter-panel {
   gap: 8px;
+   
 }
 
 .filter-btn {
@@ -75,6 +76,7 @@ body {
    cards flow into a multi-column grid that wraps as the window resizes. */
 .ticket-grid {
   gap: 16px;
+
 }
 
 /* ---------- Ticket card ---------- */
@@ -121,15 +123,28 @@ body {
    white text); badge-high, badge-medium and badge-low should step down
    in urgency from there. */
 .badge-critical {
+  color:red,
+  Font-Text  white;
+  
 }
 
 .badge-high {
+  color:orange
+   Font-Text white
+
+
 }
 
 .badge-medium {
+  color:yellow
+   Font-Text black
 }
 
 .badge-low {
+  color:green
+     Font-Text white
+
+
 }
 
 /* ---------- Status pills ---------- */

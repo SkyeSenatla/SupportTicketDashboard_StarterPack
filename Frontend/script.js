@@ -42,6 +42,10 @@ function renderTickets(ticketsToRender) {
     // TODO: Dynamic styling - use getBadgeClass(ticket.priorityLevel) and
     // getStatusClass(ticket.status) to add the correct classes to the
     // badge and status elements so they're colored based on the ticket's data.
+   
+  const container = document.getElementById( getBadgeClass || getStatusClass );
+  container.innerHTML = "";
+     
   });
 }
 

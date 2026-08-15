@@ -89,8 +89,9 @@ public class TicketManager
     // list, so anything a caller does to the returned list (Add, Remove,
     // Clear, Sort...) mutates TicketManager's internal state too. Fix this
     // so GetAllTickets() returns a defensive copy instead.
-    public List<Ticket> GetAllTickets()
-    {
+    private List<Ticket> GetAllTickets()
+    {   
+         
         return _tickets;
     }
 
@@ -100,7 +101,12 @@ public class TicketManager
         var result = new List<Ticket>();
         // TODO: Loop through _tickets and add any ticket with PriorityLevel
         // "Critical" or "High" to result.
-        return result;
+        if(PriorityLevel  = "Crital" || "High")
+        {
+
+             return result;
+        }
+       
     }
 
     // Counts tickets per status into a Dictionary<string, int>.
@@ -110,6 +116,12 @@ public class TicketManager
     {
         var counts = new Dictionary<string, int>();
         return counts;
+        GetAllTickets.
+        GetTicketCountsByStatus => counts.s {
+            Open++ ;
+            Medium++;
+            Low++;
+        }
     }
 
     // Returns tickets sorted newest to oldest by CreatedDate.
@@ -117,7 +129,11 @@ public class TicketManager
     {
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by CreatedDate, newest first.
-        return sorted;
+        if(sorted  > CreatedDate)
+        {
+             return sorted;
+        }
+       
     }
 
     // Returns tickets ordered by urgency first (Critical, then High, then
@@ -129,7 +145,31 @@ public class TicketManager
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by PriorityRank[t.PriorityLevel] ascending,
         // then by CreatedDate descending within the same priority.
-        return sorted;
+        
+         
+        result.Sort((PriorityOrder) => a.CreatedDate.CompareTo(sorted.CreatedDate));
+        if(sorted == "Crital")
+        {
+            return sorted;
+        }
+        else if (sorted == "High")
+        {
+            return sorted;
+        }
+        else if(sorted == "Medium")
+        {
+            return sorted;
+        }
+        else if(sorted == "Low")
+        (
+           return sorted;
+        )
+        else{
+            CreatedDate 
+        }
+        return result; 
+}
+      
     }
 
     // Returns the average number of days between CreatedDate and ClosedDate
@@ -139,7 +179,13 @@ public class TicketManager
     public double GetAverageResolutionDays()
     {
         // TODO: Implement using LINQ.
-        return 0;
+
+          result (CreatedDate + ClosedDate) =. s.(CreatedDate + ClosedDate )/2
+          else
+          { 
+                       return 0;
+          } 
+     
     }
 
     // Returns tickets assigned to the given person (case-insensitive match
@@ -149,6 +195,7 @@ public class TicketManager
     {
         // TODO: Implement. Remember AssignedTo can itself be null - don't
         // let a null AssignedTo blow up your comparison.
+        assignee = AssignedTo
         return new List<Ticket>();
     }
 
@@ -158,6 +205,8 @@ public class TicketManager
     {
         // TODO: Implement using LINQ. You'll need Any() to look inside the
         // Tags and Comments collections on each ticket.
+
+        SearchTickets=> s.keyword = Title,Tags , Comments         
         return new List<Ticket>();
     }
 
@@ -190,6 +239,8 @@ public class TicketManager
     public List<Ticket> GetSlaBreaches(DateTime asOf)
     {
         return new List<Ticket>();
+       /* The method gives a restriction point for Ticket handling based on the priority time set up  for each ticket e.g 
+       a critical ticket has to be solved first before other those with low priotity can  stay long without breaching */
     }
 
     // Returns a NEW list of ticket copies for every SLA-breaching ticket
@@ -202,5 +253,7 @@ public class TicketManager
     public List<Ticket> GetEscalatedTickets(DateTime asOf)
     {
         return new List<Ticket>();
+        /* The escalation ugency of tickets is ranked based on the priorityOrder method , if not resoleved
+        within time they  get escalated to the GetUnresolevedTicket*/
     }
-}
+
