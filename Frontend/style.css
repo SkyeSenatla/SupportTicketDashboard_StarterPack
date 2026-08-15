@@ -24,6 +24,8 @@ body {
   background-color: #1f2933;
   color: #ffffff;
   padding: 16px 32px;
+  alignment-baseline: central;
+  
 }
 
 .dashboard-header h1 {
@@ -74,6 +76,10 @@ body {
    grid. Add the layout property (and a template for the columns) so
    cards flow into a multi-column grid that wraps as the window resizes. */
 .ticket-grid {
+  grid-template-columns: auto;
+  align-items: center;
+  border-radius: 20px;
+  padding: 20px;
   gap: 16px;
 }
 
@@ -121,15 +127,52 @@ body {
    white text); badge-high, badge-medium and badge-low should step down
    in urgency from there. */
 .badge-critical {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-decoration-color: white;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background-color: red;
 }
 
 .badge-high {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-decoration-color: white;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background-color: orange;
 }
 
 .badge-medium {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-decoration-color: white;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background-color: yellow;
+
 }
 
 .badge-low {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-decoration-color: white;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background-color: green;
 }
 
 /* ---------- Status pills ---------- */
