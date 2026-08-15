@@ -18,12 +18,13 @@ body {
    alignment properties you need) to fix it. */
 .dashboard-header {
   justify-content: space-between;
-  align-items: center;
+  align-items:center;
   flex-wrap: wrap;
   gap: 12px;
   background-color: #1f2933;
   color: #ffffff;
   padding: 16px 32px;
+  -ms-layout-grid: line;
 }
 
 .dashboard-header h1 {
@@ -32,7 +33,10 @@ body {
 
 /* TODO: The filter buttons are stacking vertically instead of sitting in a row. */
 .filter-panel {
+  justify-content: space-between;
+  align-items:center;
   gap: 8px;
+  -ms-layout-grid: line;
 }
 
 .filter-btn {
@@ -74,7 +78,11 @@ body {
    grid. Add the layout property (and a template for the columns) so
    cards flow into a multi-column grid that wraps as the window resizes. */
 .ticket-grid {
+  justify-content: space-between;
+  align-items:center;
+  flex-wrap: wrap;
   gap: 16px;
+  -ms-layout-grid:inherit;
 }
 
 /* ---------- Ticket card ---------- */
@@ -121,15 +129,23 @@ body {
    white text); badge-high, badge-medium and badge-low should step down
    in urgency from there. */
 .badge-critical {
+  background-color: #ff0000;
+  color: #ffffff;
 }
 
 .badge-high {
+  background-color: #ffa500;
+  color: #ffffff;
 }
 
 .badge-medium {
+  background-color: #ffd900;
+  color: #000000;
 }
 
 .badge-low {
+  background-color: mediumseagreen;
+  color: #ffffff;
 }
 
 /* ---------- Status pills ---------- */

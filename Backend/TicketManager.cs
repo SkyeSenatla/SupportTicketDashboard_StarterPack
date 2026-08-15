@@ -23,7 +23,7 @@ public class TicketManager
         ["Medium"] = TimeSpan.FromDays(5),
         ["Low"] = TimeSpan.FromDays(10),
     };
-
+//
     private readonly List<Ticket> _tickets = new()
     {
         new Ticket
@@ -91,7 +91,8 @@ public class TicketManager
     // so GetAllTickets() returns a defensive copy instead.
     public List<Ticket> GetAllTickets()
     {
-        return _tickets;
+        return new List<Tickets>(_tickets);
+     // return _tickets;
     }
 
     // Returns only tickets whose PriorityLevel is "Critical" or "High".
@@ -100,6 +101,10 @@ public class TicketManager
         var result = new List<Ticket>();
         // TODO: Loop through _tickets and add any ticket with PriorityLevel
         // "Critical" or "High" to result.
+        foreach(Ticket t in _tickets)
+        {
+            result.Add(t => t.PriorityRank < 2);
+        }
         return result;
     }
 
@@ -109,6 +114,7 @@ public class TicketManager
     public Dictionary<string, int> GetTicketCountsByStatus()
     {
         var counts = new Dictionary<string, int>();
+        counts = _tickets.ToDictionary(_tickets.Status,_tickets.LINQ(_tickets.Count() as "Count",_tickets.GroupBy(_tickets.Status)))
         return counts;
     }
 
@@ -117,6 +123,7 @@ public class TicketManager
     {
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by CreatedDate, newest first.
+        sorted.Sort(CreatedDate,descending);
         return sorted;
     }
 
@@ -129,8 +136,10 @@ public class TicketManager
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by PriorityRank[t.PriorityLevel] ascending,
         // then by CreatedDate descending within the same priority.
+        sorted.Sort(s => s.PriorityRank, ascending).SortTicketsByDate();
+        //sorted.LINQ(Sort by sorted.PriorityRank, SortTicketsByDate());
         return sorted;
-    }
+    }//
 
     // Returns the average number of days between CreatedDate and ClosedDate
     // for tickets that have been closed. Tickets without a ClosedDate must
@@ -139,7 +148,14 @@ public class TicketManager
     public double GetAverageResolutionDays()
     {
         // TODO: Implement using LINQ.
-        return 0;
+        int n  = 0;
+        foreach(Ticket ticket in _tickets)
+        {
+            if(ticket.Status == "Closed" && ClosedDate != unassigned)
+                n++;
+        }
+        //n = LINQ(Count*, when _tickets.Status == "Closed" );
+        return n;
     }
 
     // Returns tickets assigned to the given person (case-insensitive match
@@ -149,7 +165,13 @@ public class TicketManager
     {
         // TODO: Implement. Remember AssignedTo can itself be null - don't
         // let a null AssignedTo blow up your comparison.
-        return new List<Ticket>();
+        List<Ticket> assigned = new List<Ticket>()
+        foreach(Ticket ticket in _tickets)
+        {
+            if(assignee == ticket.AssignedTo)
+                assigned.Add(ticket);
+        }
+        return new List<Ticket>(assigned);
     }
 
     // Returns tickets where the keyword (case-insensitive) appears in the
@@ -158,7 +180,9 @@ public class TicketManager
     {
         // TODO: Implement using LINQ. You'll need Any() to look inside the
         // Tags and Comments collections on each ticket.
-        return new List<Ticket>();
+        List<Ticket> search = new List<Ticket>();
+        search - _tickets.LINQ(search.Any(keyword));
+        return new List<Ticket>(search);
     }
 
     // Returns every ticket that has NOT been closed yet (Status is "Open" or
@@ -174,12 +198,12 @@ public class TicketManager
         var result = new List<Ticket>();
         foreach (var ticket in _tickets)
         {
-            if (ticket.Status != "closed")
+            if (ticket.Status != "Closed")
             {
                 result.Add(ticket);
             }
         }
-        result.Sort((a, b) => a.CreatedDate.CompareTo(b.CreatedDate));
+        result.Sort((a, b) => a.CreatedDate.CompareTo(b.CreatedDate), descending);
         return result;
     }
 
@@ -189,7 +213,14 @@ public class TicketManager
     // TODO: Implement.
     public List<Ticket> GetSlaBreaches(DateTime asOf)
     {
-        return new List<Ticket>();
+        List<Ticket>() unresolved = GetUnresolvedTickets();
+        foreach(Ticket un in unresolved)
+        {
+            
+            if(asOf - un.CreatedDate < SlaThresholds.TimeSpan.find(un.PriorityLevel))
+                unresolved.Remove(un);
+        }
+        return unresolved;
     }
 
     // Returns a NEW list of ticket copies for every SLA-breaching ticket
@@ -201,6 +232,12 @@ public class TicketManager
     // TODO: Implement.
     public List<Ticket> GetEscalatedTickets(DateTime asOf)
     {
-        return new List<Ticket>();
+        List<Ticket> tickets = new List<Ticket>(GetSlaBreaches(asOf));
+        foreach(Ticket t in tickets)
+        {
+            if(t.PriorityRank != 0)
+                t.PriorityLevel = t.PriorityRank - 1;
+        }
+        return tickets;
     }
 }
