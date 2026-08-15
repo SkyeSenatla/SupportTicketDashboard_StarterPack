@@ -22,6 +22,8 @@ foreach (var kvp in manager.GetTicketCountsByStatus())
     Console.WriteLine($"{kvp.Key}: {kvp.Value}");
 }
 
+
+
 Console.WriteLine();
 Console.WriteLine("=== Tickets Sorted Newest to Oldest ===");
 foreach (var ticket in manager.SortTicketsByDate())
@@ -77,9 +79,9 @@ foreach (var ticket in manager.GetSlaBreaches(asOf))
     Console.WriteLine($"[{ticket.PriorityLevel}] #{ticket.Id} {ticket.Title}");
 }
 
-Console.WriteLine();
-Console.WriteLine("=== Escalated Tickets (as of 2026-08-13 09:00) ===");
-foreach (var ticket in manager.GetEscalatedTickets(asOf))
-{
-    Console.WriteLine($"#{ticket.Id} {ticket.Title} -> [{ticket.PriorityLevel}]");
-}
+// Console.WriteLine();
+// Console.WriteLine("=== Escalated Tickets (as of 2026-08-13 09:00) ===");
+// foreach (var ticket in manager.GetEscalatedTickets(asOf))
+// {
+//     Console.WriteLine($"#{ticket.Id} {ticket.Title} -> [{ticket.PriorityLevel}]");
+// }
