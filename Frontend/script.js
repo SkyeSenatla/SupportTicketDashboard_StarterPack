@@ -42,6 +42,8 @@ function renderTickets(ticketsToRender) {
     // TODO: Dynamic styling - use getBadgeClass(ticket.priorityLevel) and
     // getStatusClass(ticket.status) to add the correct classes to the
     // badge and status elements so they're colored based on the ticket's data.
+
+
   });
 }
 
@@ -55,6 +57,7 @@ function setActiveButton(activeId) {
 function showAllTickets() {
   renderTickets(tickets);
   setActiveButton("filter-all");
+  
 }
 
 function showCriticalTickets() {
@@ -91,7 +94,7 @@ function getTicketCountsByStatus(ticketsToCount) {
 // sorting priorityLevel as a plain string will NOT give you the right order.
 // TODO: Implement.
 function sortTicketsByPriorityThenDate(ticketsToSort) {
-  return [...ticketsToSort];
+   return [...ticketsToSort];
 }
 
 // Returns the average number of days between createdDate and closedDate
@@ -99,6 +102,10 @@ function sortTicketsByPriorityThenDate(ticketsToSort) {
 // excluded. Return 0 if there are no closed tickets (don't divide by zero!).
 // TODO: Implement.
 function getAverageResolutionDays(ticketsToAverage) {
+    if(closedDate !="null"){
+       ticketsToAverage=(createdDate+closedDate)/2
+      return ticketsToAverage;
+    }
   return 0;
 }
 
@@ -108,6 +115,9 @@ function getAverageResolutionDays(ticketsToAverage) {
 // TODO: Implement. Remember assignedTo can itself be null - don't let a
 // null assignedTo blow up your comparison.
 function getTicketsByAssignee(ticketsToFilter, assignee) {
+    if(tickets.assignedTo !="null"){
+      return assignee;
+    }
   return [];
 }
 
@@ -116,6 +126,10 @@ function getTicketsByAssignee(ticketsToFilter, assignee) {
 // TODO: Implement. You'll need some() to look inside the tags and comments
 // arrays on each ticket.
 function searchTickets(ticketsToSearch, keyword) {
+  if(keyword ==tickets.title)
+  {
+    return tickets;
+  }
   return [];
 }
 
@@ -127,6 +141,7 @@ function searchTickets(ticketsToSearch, keyword) {
 // array?) and fix the one line responsible. Do not rewrite the function
 // from scratch.
 function getTicketsSortedByDate(ticketsToSort) {
+ 
   ticketsToSort.sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
   return ticketsToSort;
 }

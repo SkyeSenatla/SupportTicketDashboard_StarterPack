@@ -84,6 +84,7 @@ public class TicketManager
         },
     };
 
+
     // Returns all tickets.
     // TODO: This currently hands back a direct reference to the internal
     // list, so anything a caller does to the returned list (Add, Remove,
@@ -100,6 +101,14 @@ public class TicketManager
         var result = new List<Ticket>();
         // TODO: Loop through _tickets and add any ticket with PriorityLevel
         // "Critical" or "High" to result.
+
+        for(int index=0;index <= 10;index++)
+        {
+            if(PriorityLevel=="Critical" && PriorityLevel=="High")
+            {
+                result = PriorityLevel;
+            }
+        }
         return result;
     }
 
@@ -109,6 +118,7 @@ public class TicketManager
     public Dictionary<string, int> GetTicketCountsByStatus()
     {
         var counts = new Dictionary<string, int>();
+        
         return counts;
     }
 
@@ -117,6 +127,7 @@ public class TicketManager
     {
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by CreatedDate, newest first.
+        orderby sorted.CreatedDate
         return sorted;
     }
 
@@ -129,6 +140,8 @@ public class TicketManager
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by PriorityRank[t.PriorityLevel] ascending,
         // then by CreatedDate descending within the same priority.
+         orderby sorted.PriorityRank
+        orderby descending sorted.CreatedDate
         return sorted;
     }
 
@@ -139,6 +152,8 @@ public class TicketManager
     public double GetAverageResolutionDays()
     {
         // TODO: Implement using LINQ.
+         var sorted = new List<Ticket>(_tickets);
+         select Status=="Open"
         return 0;
     }
 
@@ -158,6 +173,7 @@ public class TicketManager
     {
         // TODO: Implement using LINQ. You'll need Any() to look inside the
         // Tags and Comments collections on each ticket.
+        select Any.Title()
         return new List<Ticket>();
     }
 
@@ -174,7 +190,7 @@ public class TicketManager
         var result = new List<Ticket>();
         foreach (var ticket in _tickets)
         {
-            if (ticket.Status != "closed")
+            if (Status != "closed")
             {
                 result.Add(ticket);
             }
@@ -189,7 +205,9 @@ public class TicketManager
     // TODO: Implement.
     public List<Ticket> GetSlaBreaches(DateTime asOf)
     {
+    
         return new List<Ticket>();
+       
     }
 
     // Returns a NEW list of ticket copies for every SLA-breaching ticket
