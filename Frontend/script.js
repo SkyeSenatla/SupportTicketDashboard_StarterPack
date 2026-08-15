@@ -28,17 +28,22 @@ function renderTickets(ticketsToRender) {
   ticketsToRender.forEach(ticket => {
     // TODO: Build the ticket card DOM structure and append it to `container`.
     // Match the structure of the "Example Ticket Card" in index.html:
-    //   <article class="ticket-card">
-    //     <div class="ticket-card-header">
-    //       <h3 class="ticket-title">...</h3>
-    //       <span class="badge ...">...</span>
-    //     </div>
-    //     <div class="ticket-meta">
-    //       <span class="ticket-status ...">...</span>
-    //       <span class="ticket-date">...</span>
-    //     </div>
-    //   </article>
-    //
+    <section class="reference-panel">
+      <h2 class="reference-title">Example Ticket Card</h2>
+      <h3 class=" ticket-card">Ticket Card</h3>
+    <article data-status="Open" data-priority="Critical"></article>
+   <article class="ticket-card">
+         <div class="ticket-card-header">
+          <h3 class="ticket-title">Email server down </h3>
+           <span >ticketsToRender</span>
+         </div>
+        <div class="ticket-meta">
+           <span class="ticket-status ...">Closed </span>
+           <span class="ticket-date"> 2026-08-19 </span>
+         </div>
+       </article>
+       </section>
+  
     // TODO: Dynamic styling - use getBadgeClass(ticket.priorityLevel) and
     // getStatusClass(ticket.status) to add the correct classes to the
     // badge and status elements so they're colored based on the ticket's data.
@@ -67,6 +72,15 @@ function showOpenTickets() {
   setActiveButton("filter-open");
 }
 
+function showAllTickets () {
+  renderTickets(tickets.filter(t => t.status === "Open"));
+  setActiveButton("filter-all");
+} 
+
+function showCriticalTickets(){
+  renderTickects(tickets.filter(t => t.status === "critical"));
+  setActiveButton("filter-crital");
+}
 // TODO: Wire up the three filter buttons (#filter-all, #filter-critical,
 // #filter-open) with click listeners that call showAllTickets(),
 // showCriticalTickets() and showOpenTickets() respectively.
@@ -82,8 +96,14 @@ renderTickets(tickets);
 // { "Open": 4, "In Progress": 2, "Closed": 2 }.
 // TODO: Implement using reduce(), not a manual loop.
 function getTicketCountsByStatus(ticketsToCount) {
+
+ "Open" ==4;
+ "In Progress" == 2;
+ "Closed" == 2;
+ 
   return {};
 }
+
 
 // Returns a NEW array ordered by urgency first (Critical, then High, then
 // Medium, then Low), and within the same priority, newest createdDate
@@ -91,8 +111,22 @@ function getTicketCountsByStatus(ticketsToCount) {
 // sorting priorityLevel as a plain string will NOT give you the right order.
 // TODO: Implement.
 function sortTicketsByPriorityThenDate(ticketsToSort) {
-  return [...ticketsToSort];
-}
+  return [...ticketsToSort];}
+
+  function sortTicketsByPriorityThenDate(ticketsToSort) {
+  return [critical];
+  }
+  function sortTicketsByPriorityThenDate(ticketsToSort) {
+  return [High];
+
+  function sortTicketsByPriorityThenDate(ticketsToSort) {
+  return [Medium];
+
+  }
+  function sortTicketsByPriorityThenDate(ticketsToSort) {
+  return [Low];
+
+}}
 
 // Returns the average number of days between createdDate and closedDate
 // for tickets that have a closedDate. Tickets without a closedDate must be
