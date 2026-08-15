@@ -85,96 +85,115 @@ public class TicketManager
     };
 
     // Returns all tickets.
-    // TODO: This currently hands back a direct reference to the internal
-    // list, so anything a caller does to the returned list (Add, Remove,
-    // Clear, Sort...) mutates TicketManager's internal state too. Fix this
-    // so GetAllTickets() returns a defensive copy instead.
+    // Fixed: now returns a defensive copy instead of a direct reference to
+    // the internal list, so callers can Add/Remove/Sort their copy without
+    // mutating TicketManager's internal state.
     public List<Ticket> GetAllTickets()
     {
-        return _tickets;
+        return new List<Ticket>(_tickets);
     }
 
     // Returns only tickets whose PriorityLevel is "Critical" or "High".
     public List<Ticket> GetHighPriorityTickets()
     {
         var result = new List<Ticket>();
-        // TODO: Loop through _tickets and add any ticket with PriorityLevel
-        // "Critical" or "High" to result.
+        foreach (var ticket in _tickets)
+        {
+            if (ticket.PriorityLevel == "Critical" || ticket.PriorityLevel == "High")
+            {
+                result.Add(ticket);
+            }
+        }
         return result;
     }
 
     // Counts tickets per status into a Dictionary<string, int>.
-    // TODO: Implement this using LINQ (GroupBy + ToDictionary), not a manual
-    // foreach loop.
+    // Implemented using LINQ (GroupBy + ToDictionary).
     public Dictionary<string, int> GetTicketCountsByStatus()
     {
-        var counts = new Dictionary<string, int>();
-        return counts;
+        return _tickets
+            .GroupBy(t => t.Status)
+            .ToDictionary(g => g.Key, g => g.Count());
     }
 
     // Returns tickets sorted newest to oldest by CreatedDate.
     public List<Ticket> SortTicketsByDate()
     {
         var sorted = new List<Ticket>(_tickets);
-        // TODO: Sort `sorted` by CreatedDate, newest first.
+        sorted.Sort((a, b) => b.CreatedDate.CompareTo(a.CreatedDate));
         return sorted;
     }
 
     // Returns tickets ordered by urgency first (Critical, then High, then
     // Medium, then Low), and within the same priority, newest CreatedDate
-    // first. Use the PriorityRank map above - sorting PriorityLevel as a
-    // plain string will NOT give you the right order.
+    // first. Uses the PriorityRank map above - sorting PriorityLevel as a
+    // plain string would NOT give the right order.
     public List<Ticket> SortTicketsByPriorityThenDate()
     {
         var sorted = new List<Ticket>(_tickets);
-        // TODO: Sort `sorted` by PriorityRank[t.PriorityLevel] ascending,
-        // then by CreatedDate descending within the same priority.
+        sorted.Sort((a, b) =>
+        {
+            int rankCompare = PriorityRank[a.PriorityLevel].CompareTo(PriorityRank[b.PriorityLevel]);
+            return rankCompare != 0
+                ? rankCompare
+                : b.CreatedDate.CompareTo(a.CreatedDate);
+        });
         return sorted;
     }
 
     // Returns the average number of days between CreatedDate and ClosedDate
-    // for tickets that have been closed. Tickets without a ClosedDate must
-    // be excluded. Return 0 if there are no closed tickets (don't divide by
-    // zero!).
+    // for tickets that have been closed. Tickets without a ClosedDate are
+    // excluded. Returns 0 if there are no closed tickets (no division by
+    // zero).
     public double GetAverageResolutionDays()
     {
-        // TODO: Implement using LINQ.
-        return 0;
+        var closed = _tickets.Where(t => t.ClosedDate.HasValue).ToList();
+        if (closed.Count == 0) return 0;
+
+        return closed.Average(t => (t.ClosedDate!.Value - t.CreatedDate).TotalDays);
     }
 
     // Returns tickets assigned to the given person (case-insensitive match
-    // on AssignedTo). Passing null or an empty string should return the
-    // tickets that are currently unassigned.
+    // on AssignedTo). Passing null or an empty string returns the tickets
+    // that are currently unassigned.
     public List<Ticket> GetTicketsByAssignee(string? assignee)
     {
-        // TODO: Implement. Remember AssignedTo can itself be null - don't
-        // let a null AssignedTo blow up your comparison.
-        return new List<Ticket>();
+        if (string.IsNullOrEmpty(assignee))
+        {
+            return _tickets.Where(t => string.IsNullOrEmpty(t.AssignedTo)).ToList();
+        }
+
+        return _tickets
+            .Where(t => t.AssignedTo != null &&
+                        t.AssignedTo.Equals(assignee, StringComparison.OrdinalIgnoreCase))
+            .ToList();
     }
 
     // Returns tickets where the keyword (case-insensitive) appears in the
     // Title, in any of the ticket's Tags, or in the text of any Comment.
     public List<Ticket> SearchTickets(string keyword)
     {
-        // TODO: Implement using LINQ. You'll need Any() to look inside the
-        // Tags and Comments collections on each ticket.
-        return new List<Ticket>();
+        return _tickets.Where(t =>
+            t.Title.Contains(keyword, StringComparison.OrdinalIgnoreCase) ||
+            t.Tags.Any(tag => tag.Contains(keyword, StringComparison.OrdinalIgnoreCase)) ||
+            t.Comments.Any(c => c.Text.Contains(keyword, StringComparison.OrdinalIgnoreCase))
+        ).ToList();
     }
 
     // Returns every ticket that has NOT been closed yet (Status is "Open" or
     // "In Progress"), sorted oldest-created first so the longest-waiting
     // tickets surface at the top.
     //
-    // NOTE: This method is already fully written - but it has a bug. Run the
-    // project, compare the output against the description above, and find
-    // and fix the mistake. Do not rewrite the method from scratch; there is
-    // one small thing wrong with it.
+    // Bug fix: the original check compared against "closed" (lowercase),
+    // but Status is stored as "Closed" (capital C), so the comparison never
+    // matched and every ticket - including closed ones - was treated as
+    // unresolved. Fixed to compare against "Closed".
     public List<Ticket> GetUnresolvedTickets()
     {
         var result = new List<Ticket>();
         foreach (var ticket in _tickets)
         {
-            if (ticket.Status != "closed")
+            if (ticket.Status != "Closed")
             {
                 result.Add(ticket);
             }
@@ -186,21 +205,45 @@ public class TicketManager
     // Returns unresolved tickets (Status is "Open" or "In Progress") whose
     // age (asOf - CreatedDate) exceeds their priority's SLA threshold (see
     // SlaThresholds above). Closed tickets never breach, no matter how old.
-    // TODO: Implement.
     public List<Ticket> GetSlaBreaches(DateTime asOf)
     {
-        return new List<Ticket>();
+        return _tickets
+            .Where(t => t.Status != "Closed")
+            .Where(t => (asOf - t.CreatedDate) > SlaThresholds[t.PriorityLevel])
+            .ToList();
     }
 
     // Returns a NEW list of ticket copies for every SLA-breaching ticket
     // (see GetSlaBreaches), with each copy's PriorityLevel bumped one step
     // more urgent using PriorityOrder above (Critical stays Critical). The
-    // original tickets must be unaffected - do not mutate _tickets, and
-    // don't just hand back the same Ticket objects with PriorityLevel
-    // changed in place.
-    // TODO: Implement.
+    // original tickets are unaffected - _tickets is never mutated, and each
+    // breach gets a brand-new Ticket object rather than reusing the
+    // original reference.
     public List<Ticket> GetEscalatedTickets(DateTime asOf)
     {
-        return new List<Ticket>();
+        var breaches = GetSlaBreaches(asOf);
+        var result = new List<Ticket>();
+
+        foreach (var ticket in breaches)
+        {
+            int currentIndex = Array.IndexOf(PriorityOrder, ticket.PriorityLevel);
+            int newIndex = Math.Max(currentIndex - 1, 0);
+
+            var copy = new Ticket
+            {
+                Id = ticket.Id,
+                Title = ticket.Title,
+                Status = ticket.Status,
+                PriorityLevel = PriorityOrder[newIndex],
+                CreatedDate = ticket.CreatedDate,
+                ClosedDate = ticket.ClosedDate,
+                AssignedTo = ticket.AssignedTo,
+                Tags = new List<string>(ticket.Tags),
+                Comments = new List<Comment>(ticket.Comments),
+            };
+            result.Add(copy);
+        }
+
+        return result;
     }
 }
