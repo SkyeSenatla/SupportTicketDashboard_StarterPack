@@ -122,7 +122,11 @@ public class TicketManager
     {
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by CreatedDate, newest first.
-        return sorted;
+        if(var > CreatedDate)
+        {
+             return sorted;
+        }
+       
     }
 
     // Returns tickets ordered by urgency first (Critical, then High, then
