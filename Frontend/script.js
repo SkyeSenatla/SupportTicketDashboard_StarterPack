@@ -42,6 +42,18 @@ function renderTickets(ticketsToRender) {
     // TODO: Dynamic styling - use getBadgeClass(ticket.priorityLevel) and
     // getStatusClass(ticket.status) to add the correct classes to the
     // badge and status elements so they're colored based on the ticket's data.
+    <article data-status={ticket.status} data-priority={ticket.priorityLevel} >
+        <div class="ticket-card-header">
+          <h3 class="ticket-title">{ticket.title}</h3>
+          <span>{ticket.status}</span>
+        </div>
+        <div class="ticket-meta">
+          <span>Open</span>
+          <span class="ticket-date">{ticket.createdDate}</span>
+        </div>
+      </article>
+
+
   });
 }
 

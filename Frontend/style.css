@@ -121,15 +121,24 @@ body {
    white text); badge-high, badge-medium and badge-low should step down
    in urgency from there. */
 .badge-critical {
+  background-color: red;
+  color: white;
 }
 
 .badge-high {
+  background-color: orange;
+  color: white;
+
 }
 
 .badge-medium {
+  background-color: yellow;
+  color: white;
 }
 
 .badge-low {
+  background-color: green;
+  color: white;
 }
 
 /* ---------- Status pills ---------- */
