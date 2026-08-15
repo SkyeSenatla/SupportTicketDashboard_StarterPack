@@ -179,7 +179,13 @@ public class TicketManager
     public double GetAverageResolutionDays()
     {
         // TODO: Implement using LINQ.
-        return 0;
+
+          result (CreatedDate + ClosedDate) =. s.(CreatedDate + ClosedDate )/2
+          else
+          { 
+                       return 0;
+          } 
+     
     }
 
     // Returns tickets assigned to the given person (case-insensitive match
