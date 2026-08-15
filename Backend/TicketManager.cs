@@ -186,6 +186,7 @@ public class TicketManager
     {
         // TODO: Implement. Remember AssignedTo can itself be null - don't
         // let a null AssignedTo blow up your comparison.
+        assignee = AssignedTo
         return new List<Ticket>();
     }
 
