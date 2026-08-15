@@ -247,5 +247,7 @@ public class TicketManager
     public List<Ticket> GetEscalatedTickets(DateTime asOf)
     {
         return new List<Ticket>();
+        /* The escalation ugency of tickets is ranked based on the priorityOrder method , if not resoleved
+        within time they  get escalated to the GetUnresolevedTicket*/
     }
 
