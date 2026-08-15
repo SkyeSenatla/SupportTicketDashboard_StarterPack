@@ -28,16 +28,16 @@ function renderTickets(ticketsToRender) {
   ticketsToRender.forEach(ticket => {
     // TODO: Build the ticket card DOM structure and append it to `container`.
     // Match the structure of the "Example Ticket Card" in index.html:
-    //   <article class="ticket-card">
-    //     <div class="ticket-card-header">
-    //       <h3 class="ticket-title">...</h3>
-    //       <span class="badge ...">...</span>
-    //     </div>
-    //     <div class="ticket-meta">
-    //       <span class="ticket-status ...">...</span>
-    //       <span class="ticket-date">...</span>
-    //     </div>
-    //   </article>
+       <article class="ticket-card">
+         <div class="ticket-card-header">
+           <h3 class="ticket-title">...</h3>
+           <span class="badge ...">...</span>
+         </div>
+          <div class="ticket-meta">
+           <span class="ticket-status ...">...</span>
+           <span class="ticket-date">...</span>
+         </div>
+       </article>
     //
     // TODO: Dynamic styling - use getBadgeClass(ticket.priorityLevel) and
     // getStatusClass(ticket.status) to add the correct classes to the

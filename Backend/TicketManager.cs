@@ -91,6 +91,14 @@ public class TicketManager
     // so GetAllTickets() returns a defensive copy instead.
     public List<Ticket> GetAllTickets()
     {
+        foreach (var ticket in _tickets)
+        {
+            if (ticket.Status == "Critical")
+            {
+                sorted.Add(ticket);
+            }
+          
+        }
         return _tickets;
     }
 
@@ -112,10 +120,23 @@ public class TicketManager
     // Counts tickets per status into a Dictionary<string, int>.
     // TODO: Implement this using LINQ (GroupBy + ToDictionary), not a manual
     // foreach loop.
-    public Dictionary<string, int> GetTicketCountsByStatus(string [] str)
+    public Dictionary<string, int> GetTicketCountsByStatus()
     {
         var counts = new Dictionary<string, int>();
-        
+        for ( int i=0; i<counts.lenght ; i++)
+
+        if (ticket.Status == "Open")
+        {
+            counts.Add(ticket);
+        }
+        else if (ticket.Status == "In Progress")
+        {
+            count.Add(ticket);
+        }
+        else 
+        {
+            count.Add(ticket);
+        }
         return counts;
     }
 
