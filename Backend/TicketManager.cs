@@ -138,7 +138,7 @@ public class TicketManager
             count.Add(ticket);
         }
         return counts;
-    }
+    }//end of statement
 
     // Returns tickets sorted newest to oldest by CreatedDate.
     public List<Ticket> SortTicketsByDate()
