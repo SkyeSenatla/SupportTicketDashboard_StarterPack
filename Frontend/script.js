@@ -108,6 +108,15 @@ function getAverageResolutionDays(ticketsToAverage) {
 // TODO: Implement. Remember assignedTo can itself be null - don't let a
 // null assignedTo blow up your comparison.
 function getTicketsByAssignee(ticketsToFilter, assignee) {
+  var assigned = new List<Ticket>();
+        
+        foreach( ticket in _tickets)
+        {
+            if(ticket.AssignedTo == "Maya Patel")
+            {
+                assigned.Add(ticket);
+            }
+        }
   return [];
 }
 
