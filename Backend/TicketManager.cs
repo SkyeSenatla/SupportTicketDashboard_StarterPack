@@ -118,9 +118,9 @@ public class TicketManager
         return counts;
         GetAllTickets.
         GetTicketCountsByStatus => counts.s {
-            Open ;
-            Medium;
-            Low;
+            Open++ ;
+            Medium++;
+            Low++;
         }
     }
 
