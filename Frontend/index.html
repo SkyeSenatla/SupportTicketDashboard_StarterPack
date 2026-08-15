@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link src="/style.css"/>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Support Ticket Dashboard</title>
@@ -27,13 +28,13 @@
            .ticket-card / .ticket-card-header / .badge / .badge-critical /
            .ticket-status / .ticket-meta rules in style.css as your guide,
            add the classes needed so this card matches the styled cards below it. -->
-      <article data-status="Open" data-priority="Critical">
+      <article .ticket-card data-status="Open" data-priority="Critical">
         <div class="ticket-card-header">
           <h3 class="ticket-title">Email server down</h3>
-          <span>Critical</span>
+          <span class="badge">Critical</span>
         </div>
         <div class="ticket-meta">
-          <span>Open</span>
+          <span class="ticket-status">Open</span>
           <span class="ticket-date">2026-08-10</span>
         </div>
       </article>
@@ -44,7 +45,7 @@
     </section>
 
   </main>
-
+ <script  src ="/script.js"></script>
   <!-- TODO: Nothing on this page is interactive yet because script.js is
        never loaded. Add the tag that loads it - and think about where it
        needs to go (here vs. <head>, with or without `defer`) given that

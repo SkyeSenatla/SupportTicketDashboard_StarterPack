@@ -1,3 +1,5 @@
+using System.Security.Cryptography.X509Certificates;
+
 namespace TicketDashboard;
 
 public class TicketManager
@@ -91,15 +93,24 @@ public class TicketManager
     // so GetAllTickets() returns a defensive copy instead.
     public List<Ticket> GetAllTickets()
     {
+
         return _tickets;
     }
 
     // Returns only tickets whose PriorityLevel is "Critical" or "High".
     public List<Ticket> GetHighPriorityTickets()
     {
+
         var result = new List<Ticket>();
         // TODO: Loop through _tickets and add any ticket with PriorityLevel
         // "Critical" or "High" to result.
+        for (int i = 0; i < result.Count; i++)
+        {
+            if (_tickets[i].PriorityLevel == PriorityOrder[1] || _tickets[i].PriorityLevel == PriorityOrder[2])
+            {
+                result.Add(_tickets[i]);
+            }
+        }
         return result;
     }
 
@@ -108,8 +119,9 @@ public class TicketManager
     // foreach loop.
     public Dictionary<string, int> GetTicketCountsByStatus()
     {
+        // List<string> status = [, "In Progress", "Closed"];
         var counts = new Dictionary<string, int>();
-        return counts;
+        return counts.GroupBy(PriorityOrder[0], PriorityOrder[]);
     }
 
     // Returns tickets sorted newest to oldest by CreatedDate.
@@ -117,6 +129,7 @@ public class TicketManager
     {
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by CreatedDate, newest first.
+        // sorted.OrderBy(_tickets, "");
         return sorted;
     }
 
@@ -129,7 +142,9 @@ public class TicketManager
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by PriorityRank[t.PriorityLevel] ascending,
         // then by CreatedDate descending within the same priority.
-        return sorted;
+
+
+        return sorted.Order().Where(PriorityRank[]);
     }
 
     // Returns the average number of days between CreatedDate and ClosedDate
@@ -138,18 +153,36 @@ public class TicketManager
     // zero!).
     public double GetAverageResolutionDays()
     {
+        DateTime date1;
+        DateTime? date2;
+        double average = 0.0;
+
         // TODO: Implement using LINQ.
-        return 0;
+        foreach (Ticket ticket in _tickets)
+        {
+            date1 = ticket.CreatedDate;
+            date2 = ticket.ClosedDate;
+            Decimal conversionDate1 = Convert.ToDecimal(date1);
+            Decimal conversionDate2 = Convert.ToDecimal(date2);
+
+            average = _tickets.Average(conversionDate1, conversionDate2);
+        }
+        return average;
     }
 
     // Returns tickets assigned to the given person (case-insensitive match
     // on AssignedTo). Passing null or an empty string should return the
     // tickets that are currently unassigned.
-    public List<Ticket> GetTicketsByAssignee(string? assignee)
+    public List<Ticket> GetTicketsByAssignee(string assignee)
     {
         // TODO: Implement. Remember AssignedTo can itself be null - don't
         // let a null AssignedTo blow up your comparison.
-        return new List<Ticket>();
+        foreach (Ticket ticket in _tickets)
+        {
+
+            return _tickets.Contains(ticket.AssignedTo = );
+        }
+        //return new List<Ticket>();
     }
 
     // Returns tickets where the keyword (case-insensitive) appears in the
@@ -158,8 +191,13 @@ public class TicketManager
     {
         // TODO: Implement using LINQ. You'll need Any() to look inside the
         // Tags and Comments collections on each ticket.
-        return new List<Ticket>();
+        foreach (Ticket ticket in _tickets)
+        {
+            return new List<Ticket>().Any().Equals(ticket.Tags = keyword);
+         }
+            
     }
+       
 
     // Returns every ticket that has NOT been closed yet (Status is "Open" or
     // "In Progress"), sorted oldest-created first so the longest-waiting
