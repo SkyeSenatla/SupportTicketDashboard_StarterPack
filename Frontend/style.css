@@ -16,7 +16,7 @@ body {
 /* TODO: This header is stacking vertically instead of spreading the title
    and filter buttons across one row. Add the layout property (and any
    alignment properties you need) to fix it. */
-.dashboard-header {
+.dashboard-header , .h1 , .filter-panel {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
