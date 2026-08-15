@@ -81,8 +81,12 @@ renderTickets(tickets);
 // Counts tickets per status. Returns a plain object like
 // { "Open": 4, "In Progress": 2, "Closed": 2 }.
 // TODO: Implement using reduce(), not a manual loop.
+
 function getTicketCountsByStatus(ticketsToCount) {
+  if (ticketstatus=0, ticketstatus>=4, ticketstatus++);
+  { 
   return {};
+  };
 }
 
 // Returns a NEW array ordered by urgency first (Critical, then High, then
@@ -91,6 +95,8 @@ function getTicketCountsByStatus(ticketsToCount) {
 // sorting priorityLevel as a plain string will NOT give you the right order.
 // TODO: Implement.
 function sortTicketsByPriorityThenDate(ticketsToSort) {
+  
+   ticketsToSort.sort((a, b) => new Date(b.priorityLevel) - new Date(a.createdDate));
   return [...ticketsToSort];
 }
 
@@ -100,6 +106,7 @@ function sortTicketsByPriorityThenDate(ticketsToSort) {
 // TODO: Implement.
 function getAverageResolutionDays(ticketsToAverage) {
   return 0;
+  
 }
 
 // Returns tickets assigned to the given person (case-insensitive match on
@@ -108,7 +115,10 @@ function getAverageResolutionDays(ticketsToAverage) {
 // TODO: Implement. Remember assignedTo can itself be null - don't let a
 // null assignedTo blow up your comparison.
 function getTicketsByAssignee(ticketsToFilter, assignee) {
-  return [];
+
+   if (ticketsToFilter==assignee)
+  
+  return [tickets];
 }
 
 // Returns tickets where the keyword (case-insensitive) appears in the
@@ -116,7 +126,10 @@ function getTicketsByAssignee(ticketsToFilter, assignee) {
 // TODO: Implement. You'll need some() to look inside the tags and comments
 // arrays on each ticket.
 function searchTickets(ticketsToSearch, keyword) {
-  return [];
+
+   if (ticketToSearch ==keyword)
+
+  return [tickets];
 }
 
 // Returns a NEW array of tickets sorted newest to oldest by createdDate.
@@ -127,8 +140,10 @@ function searchTickets(ticketsToSearch, keyword) {
 // array?) and fix the one line responsible. Do not rewrite the function
 // from scratch.
 function getTicketsSortedByDate(ticketsToSort) {
+
   ticketsToSort.sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
-  return ticketsToSort;
+  
+  return ticketsToSort[tickets];
 }
 
 console.log("=== Ticket Counts By Status ===");
