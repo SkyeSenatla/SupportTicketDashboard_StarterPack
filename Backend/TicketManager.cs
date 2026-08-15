@@ -115,6 +115,7 @@ public class TicketManager
     {
         var counts = new Dictionary<string, int>();
         return counts;
+        GetAllTickets.
     }
 
     // Returns tickets sorted newest to oldest by CreatedDate.
