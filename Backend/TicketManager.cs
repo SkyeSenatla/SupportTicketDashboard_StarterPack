@@ -89,10 +89,10 @@ public class TicketManager
     // list, so anything a caller does to the returned list (Add, Remove,
     // Clear, Sort...) mutates TicketManager's internal state too. Fix this
     // so GetAllTickets() returns a defensive copy instead.
-    public async List<Ticket> GetAllTickets()
+    public List<Ticket> GetAllTickets()
     {
-       // var tickets = List<Ticket>
-        return await _tickets.ToListAsync();
+       var tickets = List<Ticket>(_tickets);
+        return tickets;
     }
 
     // Returns only tickets whose PriorityLevel is "Critical" or "High".
@@ -129,9 +129,9 @@ public class TicketManager
     {
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by CreatedDate, newest first.
-
+        stored = stored.Sort(_tickets.CreatedDate);
         //sorted.Sort(CreatedDate).ascending;
-        if(sorted == null) return;
+        
         for(int i=0; i > sorted.Length; i++) 
         {
             for(int j=1; i > sorted.Length; i++)
