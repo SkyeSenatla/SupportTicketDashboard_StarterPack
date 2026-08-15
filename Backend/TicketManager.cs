@@ -98,9 +98,17 @@ public class TicketManager
     public List<Ticket> GetHighPriorityTickets()
     {
         var result = new List<Ticket>();
+        
         // TODO: Loop through _tickets and add any ticket with PriorityLevel
         // "Critical" or "High" to result.
-        return result;
+        foreach (var ticket in result)
+        {
+            if (ticket.PriorityLevel == "Critical" || ticket.PriorityLevel == "High")
+            {
+               
+            }
+        }
+        return results;
     }
 
     // Counts tickets per status into a Dictionary<string, int>.

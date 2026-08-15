@@ -74,6 +74,7 @@ body {
    grid. Add the layout property (and a template for the columns) so
    cards flow into a multi-column grid that wraps as the window resizes. */
 .ticket-grid {
+  display: table-column-group;
   gap: 16px;
 }
 
@@ -121,15 +122,23 @@ body {
    white text); badge-high, badge-medium and badge-low should step down
    in urgency from there. */
 .badge-critical {
+  background-color: red;
+  color: white;
 }
 
 .badge-high {
+  background-color:orange;
+  color: white;
 }
 
 .badge-medium {
+  background-color: yellow;
+  color: black;
 }
 
 .badge-low {
+  background-color: green;
+  color: white;
 }
 
 /* ---------- Status pills ---------- */
