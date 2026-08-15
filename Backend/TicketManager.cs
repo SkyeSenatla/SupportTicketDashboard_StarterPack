@@ -233,6 +233,8 @@ public class TicketManager
     public List<Ticket> GetSlaBreaches(DateTime asOf)
     {
         return new List<Ticket>();
+       /* The method gives a restriction point for Ticket handling based on the priority time set up  for each ticket e.g 
+       a critical ticket has to be solved first before other those with low priotity can  stay long without breaching */
     }
 
     // Returns a NEW list of ticket copies for every SLA-breaching ticket
@@ -246,4 +248,4 @@ public class TicketManager
     {
         return new List<Ticket>();
     }
-}
+
