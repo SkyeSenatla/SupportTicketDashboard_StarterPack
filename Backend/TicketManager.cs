@@ -100,6 +100,13 @@ public class TicketManager
         var result = new List<Ticket>();
         // TODO: Loop through _tickets and add any ticket with PriorityLevel
         // "Critical" or "High" to result.
+        foreach (var ticket in _tickets)
+        {
+            if (ticket.PriorityLevel == "Critical" || ticket.PriorityLevel == "High")
+            {
+                result.Add(ticket);
+            }
+        }
         return result;
     }
 
@@ -117,6 +124,15 @@ public class TicketManager
     {
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by CreatedDate, newest first.
+         foreach (var ticket in _tickets)
+        {
+            if (ticket.Status != "Closed")
+            {
+                sorted.Add(ticket);
+            }
+        }
+        sorted.Sort((a, b) => a.CreatedDate.CompareTo(b.CreatedDate));
+        
         return sorted;
     }
 
@@ -129,6 +145,29 @@ public class TicketManager
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by PriorityRank[t.PriorityLevel] ascending,
         // then by CreatedDate descending within the same priority.
+        foreach(var ticket in _tickets)
+        {
+            if (ticket.PriorityLevel == "Critical")
+            {
+                if (ticket.PriorityLevel == "High")
+                {
+                    if (ticket.PriorityLevel == "Medium")
+                    {
+                        if (ticket.PriorityLevel == "Low")
+                        {
+                            
+                        }
+                    }
+                }
+                sorted.Add(ticket);
+            }
+        }
+        sorted.Sort((a,b) => a.CreatedDate.CompareTo(b.CreatedDate));
+        sorted.Sort((a,b) => a.PriorityLevel.CompareTo(b.PriorityLevel));
+        
+
+        
+        
         return sorted;
     }
 

@@ -10,7 +10,7 @@ body {
   background-color: #f4f5f7;
   color: #1f2933;
   line-height: 1.5;
-}
+}/*end  of statement*/
 
 /* ---------- Header ---------- */
 /* TODO: This header is stacking vertically instead of spreading the title
@@ -121,15 +121,23 @@ body {
    white text); badge-high, badge-medium and badge-low should step down
    in urgency from there. */
 .badge-critical {
+  background-color:red;
+  color: white;
 }
 
 .badge-high {
+  background-color:orange;
+  Color: white;
 }
 
 .badge-medium {
+  background-color:yellow;
+  color: black;
 }
 
 .badge-low {
+  background-color:green;
+  color: white;
 }
 
 /* ---------- Status pills ---------- */
