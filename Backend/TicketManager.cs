@@ -91,6 +91,8 @@ public class TicketManager
     // so GetAllTickets() returns a defensive copy instead.
     public List<Ticket> GetAllTickets()
     {
+        var _tickets = new List<Ticket>();
+
         return _tickets;
     }
 
@@ -100,6 +102,11 @@ public class TicketManager
         var result = new List<Ticket>();
         // TODO: Loop through _tickets and add any ticket with PriorityLevel
         // "Critical" or "High" to result.
+        if(PriorityLevel == "Critical" || PriorityLevel == "High")
+        {
+            Console.Write(_tickets);
+        }
+
         return result;
     }
 
@@ -109,6 +116,7 @@ public class TicketManager
     public Dictionary<string, int> GetTicketCountsByStatus()
     {
         var counts = new Dictionary<string, int>();
+
         return counts;
     }
 
@@ -117,6 +125,8 @@ public class TicketManager
     {
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by CreatedDate, newest first.
+        sorted.Sort(CreatedDate);
+
         return sorted;
     }
 
@@ -129,6 +139,7 @@ public class TicketManager
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by PriorityRank[t.PriorityLevel] ascending,
         // then by CreatedDate descending within the same priority.
+        sorted
         return sorted;
     }
 
