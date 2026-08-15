@@ -10,8 +10,13 @@ const tickets = [
   { id: 8, title: "Payroll app throwing 500s", status: "Open", priorityLevel: "High", createdDate: "2026-08-11", closedDate: null, assignedTo: "Sam Osei", tags: ["payroll", "bug"], comments: [{ author: "Sam Osei", text: "Stack trace points to a null reference in the payroll service.", timestamp: "2026-08-11" }] },
 ];
 
-// Lower rank = more urgent. Used for priority-aware sorting.
-const PRIORITY_RANK = { Critical: 0, High: 1, Medium: 2, Low: 3 };
+// Lower rank = more urgent.
+const PRIORITY_RANK = {
+  Critical: 0,
+  High: 1,
+  Medium: 2,
+  Low: 3
+};
 
 function getBadgeClass(priorityLevel) {
   return "badge-" + priorityLevel.toLowerCase();
@@ -26,22 +31,44 @@ function renderTickets(ticketsToRender) {
   container.innerHTML = "";
 
   ticketsToRender.forEach(ticket => {
-    // TODO: Build the ticket card DOM structure and append it to `container`.
-    // Match the structure of the "Example Ticket Card" in index.html:
-    //   <article class="ticket-card">
-    //     <div class="ticket-card-header">
-    //       <h3 class="ticket-title">...</h3>
-    //       <span class="badge ...">...</span>
-    //     </div>
-    //     <div class="ticket-meta">
-    //       <span class="ticket-status ...">...</span>
-    //       <span class="ticket-date">...</span>
-    //     </div>
-    //   </article>
-    //
-    // TODO: Dynamic styling - use getBadgeClass(ticket.priorityLevel) and
-    // getStatusClass(ticket.status) to add the correct classes to the
-    // badge and status elements so they're colored based on the ticket's data.
+    const article = document.createElement("article");
+    article.className = "ticket-card";
+
+    article.dataset.status = ticket.status;
+    article.dataset.priority = ticket.priorityLevel;
+
+    const header = document.createElement("div");
+    header.className = "ticket-card-header";
+
+    const title = document.createElement("h3");
+    title.className = "ticket-title";
+    title.textContent = ticket.title;
+
+    const badge = document.createElement("span");
+    badge.className = `badge ${getBadgeClass(ticket.priorityLevel)}`;
+    badge.textContent = ticket.priorityLevel;
+
+    header.appendChild(title);
+    header.appendChild(badge);
+
+    const meta = document.createElement("div");
+    meta.className = "ticket-meta";
+
+    const status = document.createElement("span");
+    status.className = `ticket-status ${getStatusClass(ticket.status)}`;
+    status.textContent = ticket.status;
+
+    const date = document.createElement("span");
+    date.className = "ticket-date";
+    date.textContent = ticket.createdDate;
+
+    meta.appendChild(status);
+    meta.appendChild(date);
+
+    article.appendChild(header);
+    article.appendChild(meta);
+
+    container.appendChild(article);
   });
 }
 
@@ -49,6 +76,7 @@ function setActiveButton(activeId) {
   document.querySelectorAll(".filter-btn").forEach(btn => {
     btn.classList.remove("active");
   });
+
   document.getElementById(activeId).classList.add("active");
 }
 
@@ -58,102 +86,166 @@ function showAllTickets() {
 }
 
 function showCriticalTickets() {
-  renderTickets(tickets.filter(t => t.priorityLevel === "Critical"));
+  renderTickets(
+    tickets.filter(t => t.priorityLevel === "Critical")
+  );
+
   setActiveButton("filter-critical");
 }
 
 function showOpenTickets() {
-  renderTickets(tickets.filter(t => t.status === "Open"));
+  renderTickets(
+    tickets.filter(t => t.status === "Open")
+  );
+
   setActiveButton("filter-open");
 }
 
-// TODO: Wire up the three filter buttons (#filter-all, #filter-critical,
-// #filter-open) with click listeners that call showAllTickets(),
-// showCriticalTickets() and showOpenTickets() respectively.
+// Wire up the filter buttons.
+document
+  .getElementById("filter-all")
+  .addEventListener("click", showAllTickets);
+
+document
+  .getElementById("filter-critical")
+  .addEventListener("click", showCriticalTickets);
+
+document
+  .getElementById("filter-open")
+  .addEventListener("click", showOpenTickets);
 
 renderTickets(tickets);
 
 // ---------------------------------------------------------------------
-// The functions below aren't wired to any button - they're pure data
-// helpers, verified through the browser console (see README).
+// Data helpers
 // ---------------------------------------------------------------------
 
-// Counts tickets per status. Returns a plain object like
-// { "Open": 4, "In Progress": 2, "Closed": 2 }.
-// TODO: Implement using reduce(), not a manual loop.
+// Counts tickets per status.
 function getTicketCountsByStatus(ticketsToCount) {
-  return {};
+  return ticketsToCount.reduce((counts, ticket) => {
+    counts[ticket.status] = (counts[ticket.status] || 0) + 1;
+    return counts;
+  }, {});
 }
 
-// Returns a NEW array ordered by urgency first (Critical, then High, then
-// Medium, then Low), and within the same priority, newest createdDate
-// first. Must not mutate the input array. Use the PRIORITY_RANK map above -
-// sorting priorityLevel as a plain string will NOT give you the right order.
-// TODO: Implement.
+// Returns a NEW array ordered by priority, then newest date.
 function sortTicketsByPriorityThenDate(ticketsToSort) {
-  return [...ticketsToSort];
+  return [...ticketsToSort].sort((a, b) => {
+    const priorityComparison =
+      PRIORITY_RANK[a.priorityLevel] -
+      PRIORITY_RANK[b.priorityLevel];
+
+    if (priorityComparison !== 0) {
+      return priorityComparison;
+    }
+
+    return new Date(b.createdDate) - new Date(a.createdDate);
+  });
 }
 
-// Returns the average number of days between createdDate and closedDate
-// for tickets that have a closedDate. Tickets without a closedDate must be
-// excluded. Return 0 if there are no closed tickets (don't divide by zero!).
-// TODO: Implement.
+// Returns average resolution time in days.
 function getAverageResolutionDays(ticketsToAverage) {
-  return 0;
+  const closedTickets = ticketsToAverage.filter(
+    ticket => ticket.closedDate !== null
+  );
+
+  if (closedTickets.length === 0) {
+    return 0;
+  }
+
+  const totalDays = closedTickets.reduce((total, ticket) => {
+    const created = new Date(ticket.createdDate);
+    const closed = new Date(ticket.closedDate);
+
+    const millisecondsPerDay = 1000 * 60 * 60 * 24;
+
+    return total + (closed - created) / millisecondsPerDay;
+  }, 0);
+
+  return totalDays / closedTickets.length;
 }
 
-// Returns tickets assigned to the given person (case-insensitive match on
-// assignedTo). Passing null or an empty string should return the tickets
-// that are currently unassigned.
-// TODO: Implement. Remember assignedTo can itself be null - don't let a
-// null assignedTo blow up your comparison.
+// Returns tickets assigned to a person.
+// null or empty string returns unassigned tickets.
 function getTicketsByAssignee(ticketsToFilter, assignee) {
-  return [];
+  if (assignee === null || assignee.trim() === "") {
+    return ticketsToFilter.filter(
+      ticket => ticket.assignedTo === null
+    );
+  }
+
+  return ticketsToFilter.filter(ticket =>
+    ticket.assignedTo !== null &&
+    ticket.assignedTo.toLowerCase() === assignee.toLowerCase()
+  );
 }
 
-// Returns tickets where the keyword (case-insensitive) appears in the
-// title, in any of the ticket's tags, or in the text of any comment.
-// TODO: Implement. You'll need some() to look inside the tags and comments
-// arrays on each ticket.
+// Searches title, tags and comments.
 function searchTickets(ticketsToSearch, keyword) {
-  return [];
+  if (!keyword) {
+    return [];
+  }
+
+  const searchTerm = keyword.toLowerCase();
+
+  return ticketsToSearch.filter(ticket =>
+    ticket.title.toLowerCase().includes(searchTerm) ||
+
+    ticket.tags.some(tag =>
+      tag.toLowerCase().includes(searchTerm)
+    ) ||
+
+    ticket.comments.some(comment =>
+      comment.text.toLowerCase().includes(searchTerm)
+    )
+  );
 }
 
-// Returns a NEW array of tickets sorted newest to oldest by createdDate.
-//
-// NOTE: This function is already fully written - but it has a bug. Compare
-// its behavior against the description above (does it return a NEW array,
-// or does calling it also change the order of the original `tickets`
-// array?) and fix the one line responsible. Do not rewrite the function
-// from scratch.
+// Returns a NEW array sorted newest to oldest.
 function getTicketsSortedByDate(ticketsToSort) {
-  ticketsToSort.sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
-  return ticketsToSort;
+  return [...ticketsToSort].sort(
+    (a, b) =>
+      new Date(b.createdDate) - new Date(a.createdDate)
+  );
 }
+
+// ---------------------------------------------------------------------
+// Console tests
+// ---------------------------------------------------------------------
 
 console.log("=== Ticket Counts By Status ===");
 console.log(getTicketCountsByStatus(tickets));
 
 console.log("=== Tickets Sorted By Priority, Then Newest ===");
 sortTicketsByPriorityThenDate(tickets).forEach(t => {
-  console.log(`[${t.priorityLevel}] ${t.createdDate} - #${t.id} ${t.title}`);
+  console.log(
+    `[${t.priorityLevel}] ${t.createdDate} - #${t.id} ${t.title}`
+  );
 });
 
 console.log("=== Average Resolution Time (Days) ===");
 console.log(getAverageResolutionDays(tickets));
 
 console.log("=== Tickets Assigned To Maya Patel ===");
-getTicketsByAssignee(tickets, "Maya Patel").forEach(t => console.log(`#${t.id} ${t.title}`));
+getTicketsByAssignee(tickets, "Maya Patel")
+  .forEach(t => console.log(`#${t.id} ${t.title}`));
 
 console.log("=== Unassigned Tickets ===");
-getTicketsByAssignee(tickets, null).forEach(t => console.log(`#${t.id} ${t.title}`));
+getTicketsByAssignee(tickets, null)
+  .forEach(t => console.log(`#${t.id} ${t.title}`));
 
 console.log('=== Search Results For "network" ===');
-searchTickets(tickets, "network").forEach(t => console.log(`#${t.id} ${t.title}`));
+searchTickets(tickets, "network")
+  .forEach(t => console.log(`#${t.id} ${t.title}`));
 
 console.log("=== Ticket Order Before Sorting By Date (should be #1..#8) ===");
 console.log(tickets.map(t => t.id).join(", "));
+
 console.log("=== Tickets Sorted Newest To Oldest ===");
-getTicketsSortedByDate(tickets).forEach(t => console.log(`${t.createdDate} - #${t.id} ${t.title}`));
+getTicketsSortedByDate(tickets)
+  .forEach(t =>
+    console.log(`${t.createdDate} - #${t.id} ${t.title}`)
+  );
+
 console.log("=== Ticket Order After Sorting By Date (should still be #1..#8) ===");
 console.log(tickets.map(t => t.id).join(", "));
