@@ -147,7 +147,7 @@ public class TicketManager
         // then by CreatedDate descending within the same priority.
         
          
-        result.Sort((PriorityOrder) => a.CreatedDate.CompareTo(b.CreatedDate));
+        result.Sort((PriorityOrder) => a.CreatedDate.CompareTo(sorted.CreatedDate));
         if(sorted == "Crital")
         {
             return sorted;

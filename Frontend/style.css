@@ -26,13 +26,14 @@ body {
   padding: 16px 32px;
 }
 
-.dashboard-header h1 {
+.dashboard-header h1, .filter-panel   {
   font-size: 1.5rem;
 }
 
 /* TODO: The filter buttons are stacking vertically instead of sitting in a row. */
 .filter-panel {
   gap: 8px;
+   
 }
 
 .filter-btn {
@@ -75,6 +76,7 @@ body {
    cards flow into a multi-column grid that wraps as the window resizes. */
 .ticket-grid {
   gap: 16px;
+
 }
 
 /* ---------- Ticket card ---------- */
