@@ -31,10 +31,14 @@ function renderTickets(ticketsToRender) {
     //   <article class="ticket-card">
     //     <div class="ticket-card-header">
     //       <h3 class="ticket-title">...</h3>
+    
     //       <span class="badge ...">...</span>
+    
     //     </div>
     //     <div class="ticket-meta">
+    
     //       <span class="ticket-status ...">...</span>
+     <span class = "ticket-status">Open</span>
     //       <span class="ticket-date">...</span>
     //     </div>
     //   </article>
