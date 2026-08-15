@@ -91,6 +91,12 @@ public class TicketManager
     // so GetAllTickets() returns a defensive copy instead.
     public List<Ticket> GetAllTickets()
     {
+          Console.WriteLine("=== All Tickets ===");
+        foreach (var ticket in _tickets)
+           {
+            Console.WriteLine($"#{ticket.Id} {ticket.Title} (assigned: {ticket.AssignedTo ?? "unassigned"})");
+           }
+
         return _tickets;
     }
 
@@ -100,6 +106,10 @@ public class TicketManager
         var result = new List<Ticket>();
         // TODO: Loop through _tickets and add any ticket with PriorityLevel
         // "Critical" or "High" to result.
+      foreach (var ticket in manager.GetHighPriorityTickets())
+         {
+            Console.WriteLine($"[{ticket.PriorityLevel}] #{ticket.Id} {ticket.Title}");
+         }
         return result;
     }
 
@@ -109,6 +119,12 @@ public class TicketManager
     public Dictionary<string, int> GetTicketCountsByStatus()
     {
         var counts = new Dictionary<string, int>();
+        Console.WriteLine("=== Ticket Counts By Status ===");
+        foreach (var kvp in manager.GetTicketCountsByStatus())
+        {
+           Console.WriteLine($"{kvp.Key}: {kvp.Value}");
+        }
+
         return counts;
     }
 
@@ -117,6 +133,10 @@ public class TicketManager
     {
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by CreatedDate, newest first.
+         foreach (var ticket in manager.SortTicketsByDate())
+               {
+                     Console.WriteLine($"{ticket.CreatedDate:yyyy-MM-dd} - #{ticket.Id} {ticket.Title}");
+               }
         return sorted;
     }
 
@@ -129,6 +149,13 @@ public class TicketManager
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by PriorityRank[t.PriorityLevel] ascending,
         // then by CreatedDate descending within the same priority.
+
+        Console.WriteLine("=== Tickets Sorted By Priority, Then Newest ===");
+              foreach (var ticket in manager.SortTicketsByPriorityThenDate())
+           {
+              Console.WriteLine($"[{ticket.PriorityLevel}] {ticket.CreatedDate:yyyy-MM-dd} - #{ticket.Id} {ticket.Title}");
+           }
+
         return sorted;
     }
 
@@ -139,6 +166,12 @@ public class TicketManager
     public double GetAverageResolutionDays()
     {
         // TODO: Implement using LINQ.
+
+                Console.WriteLine();
+                Console.WriteLine("=== Average Resolution Time (Days) ===");
+                Console.WriteLine(manager.GetAverageResolutionDays().ToString("0.##"));
+
+
         return 0;
     }
 
