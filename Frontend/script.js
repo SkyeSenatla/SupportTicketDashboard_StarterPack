@@ -28,7 +28,7 @@ function renderTickets(ticketsToRender) {
   ticketsToRender.forEach(ticket => {
     // TODO: Build the ticket card DOM structure and append it to `container`.
     // Match the structure of the "Example Ticket Card" in index.html:
-    //   <article class="ticket-card">
+      <article class="ticket-card">
     //     <div class="ticket-card-header">
     //       <h3 class="ticket-title">...</h3>
     //       <span class="badge ...">...</span>
@@ -39,9 +39,9 @@ function renderTickets(ticketsToRender) {
     //     </div>
     //   </article>
     //
-    // TODO: Dynamic styling - use getBadgeClass(ticket.priorityLevel) and
-    // getStatusClass(ticket.status) to add the correct classes to the
-    // badge and status elements so they're colored based on the ticket's data.
+    // TODO: Dynamic styling - use
+     getBadgeClass(ticket.priorityLevel) 
+     getStatusClass(ticket.status) 
   });
 }
 
@@ -69,7 +69,8 @@ function showOpenTickets() {
 
 // TODO: Wire up the three filter buttons (#filter-all, #filter-critical,
 // #filter-open) with click listeners that call showAllTickets(),
-// showCriticalTickets() and showOpenTickets() respectively.
+ showCriticalTickets() 
+  showOpenTickets() 
 
 renderTickets(tickets);
 
@@ -80,8 +81,10 @@ renderTickets(tickets);
 
 // Counts tickets per status. Returns a plain object like
 // { "Open": 4, "In Progress": 2, "Closed": 2 }.
-// TODO: Implement using reduce(), not a manual loop.
-function getTicketCountsByStatus(ticketsToCount) {
+ //Implement using reduce(), not a manual loop.
+function getTicketCountsByStatus(ticketsToCount) 
+{
+  reduce()
   return {};
 }
 
