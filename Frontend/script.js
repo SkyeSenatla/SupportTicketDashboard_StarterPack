@@ -42,6 +42,41 @@ function renderTickets(ticketsToRender) {
     // TODO: Dynamic styling - use getBadgeClass(ticket.priorityLevel) and
     // getStatusClass(ticket.status) to add the correct classes to the
     // badge and status elements so they're colored based on the ticket's data.
+    const card = document.createElement("article");
+    card.className = "ticket-card";
+
+    const header = document.createElement("div");
+    header.className = "ticket-card-header";
+
+    const title = document.createElement("h3");
+    title.className = "ticket-title";
+    title.textContent = ticket.title;
+
+    const badge = document.createElement("span");
+    badge.className = "badge " + getBadgeClass(ticket.priorityLevel);
+    badge.textContent = ticket.priorityLevel;
+
+    header.appendChild(title);
+    header.appendChild(badge);
+
+    const meta = document.createElement("div");
+    meta.className = "ticket-meta";
+
+    const status = document.createElement("span");
+    status.className = "ticket-status " + getStatusClass(ticket.status);
+    status.textContent = ticket.status;
+
+    const date = document.createElement("span");
+    date.className = "ticket-date";
+    date.textContent = ticket.createdDate;
+
+    meta.appendChild(status);
+    meta.appendChild(date);
+
+    card.appendChild(header);
+    card.appendChild(meta);
+
+    container.appendChild(card);
   });
 }
 
@@ -70,7 +105,9 @@ function showOpenTickets() {
 // TODO: Wire up the three filter buttons (#filter-all, #filter-critical,
 // #filter-open) with click listeners that call showAllTickets(),
 // showCriticalTickets() and showOpenTickets() respectively.
-
+document.getElementById("filter-all").addEventListener("click", showAllTickets);
+document.getElementById("filter-critical").addEventListener("click", showCriticalTickets);
+document.getElementById("filter-open").addEventListener("click", showOpenTickets);
 renderTickets(tickets);
 
 // ---------------------------------------------------------------------
@@ -82,6 +119,10 @@ renderTickets(tickets);
 // { "Open": 4, "In Progress": 2, "Closed": 2 }.
 // TODO: Implement using reduce(), not a manual loop.
 function getTicketCountsByStatus(ticketsToCount) {
+   return ticketsToCount.reduce((counts, ticket) => {
+    counts[ticket.status] = (counts[ticket.status] || 0) + 1;
+    return counts;
+  }, {});
   return {};
 }
 
@@ -91,7 +132,11 @@ function getTicketCountsByStatus(ticketsToCount) {
 // sorting priorityLevel as a plain string will NOT give you the right order.
 // TODO: Implement.
 function sortTicketsByPriorityThenDate(ticketsToSort) {
-  return [...ticketsToSort];
+ return [...ticketsToSort].sort((a, b) => {
+    const priorityDiff = PRIORITY_RANK[a.priorityLevel] - PRIORITY_RANK[b.priorityLevel];
+    if (priorityDiff !== 0) return priorityDiff;
+    return new Date(b.createdDate) - new Date(a.createdDate);
+  });
 }
 
 // Returns the average number of days between createdDate and closedDate
@@ -99,7 +144,15 @@ function sortTicketsByPriorityThenDate(ticketsToSort) {
 // excluded. Return 0 if there are no closed tickets (don't divide by zero!).
 // TODO: Implement.
 function getAverageResolutionDays(ticketsToAverage) {
-  return 0;
+  const closed = ticketsToAverage.filter(t => t.closedDate);
+  if (closed.length === 0) return 0;
+
+  const totalDays = closed.reduce((sum, t) => {
+    const msDiff = new Date(t.closedDate) - new Date(t.createdDate);
+    return sum + msDiff / (1000 * 60 * 60 * 24);
+  }, 0);
+
+  return totalDays / closed.length; 
 }
 
 // Returns tickets assigned to the given person (case-insensitive match on
@@ -108,7 +161,12 @@ function getAverageResolutionDays(ticketsToAverage) {
 // TODO: Implement. Remember assignedTo can itself be null - don't let a
 // null assignedTo blow up your comparison.
 function getTicketsByAssignee(ticketsToFilter, assignee) {
-  return [];
+  if (!assignee) {
+    return ticketsToFilter.filter(t => !t.assignedTo);
+  }
+  return ticketsToFilter.filter(
+    t => t.assignedTo && t.assignedTo.toLowerCase() === assignee.toLowerCase()
+  );
 }
 
 // Returns tickets where the keyword (case-insensitive) appears in the
@@ -116,7 +174,15 @@ function getTicketsByAssignee(ticketsToFilter, assignee) {
 // TODO: Implement. You'll need some() to look inside the tags and comments
 // arrays on each ticket.
 function searchTickets(ticketsToSearch, keyword) {
-  return [];
+  if (!keyword) return [];
+  const kw = keyword.toLowerCase();
+
+  return ticketsToSearch.filter(t => {
+    const inTitle = t.title.toLowerCase().includes(kw);
+    const inTags = t.tags.some(tag => tag.toLowerCase().includes(kw));
+    const inComments = t.comments.some(c => c.text.toLowerCase().includes(kw));
+    return inTitle || inTags || inComments;
+  });
 }
 
 // Returns a NEW array of tickets sorted newest to oldest by createdDate.
@@ -127,8 +193,7 @@ function searchTickets(ticketsToSearch, keyword) {
 // array?) and fix the one line responsible. Do not rewrite the function
 // from scratch.
 function getTicketsSortedByDate(ticketsToSort) {
-  ticketsToSort.sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
-  return ticketsToSort;
+  return [...ticketsToSort].sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
 }
 
 console.log("=== Ticket Counts By Status ===");
