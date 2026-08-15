@@ -24,7 +24,7 @@ body {
   background-color: #1f2933;
   color: #ffffff;
   padding: 16px 32px;
-}
+} 
 
 .dashboard-header h1 {
   font-size: 1.5rem;
@@ -33,6 +33,8 @@ body {
 /* TODO: The filter buttons are stacking vertically instead of sitting in a row. */
 .filter-panel {
   gap: 8px;
+  flex-wrap: wrap;
+  padding: 16px 32px;
 }
 
 .filter-btn {
@@ -121,15 +123,23 @@ body {
    white text); badge-high, badge-medium and badge-low should step down
    in urgency from there. */
 .badge-critical {
+  color: white;
+  background-color: red;
 }
 
 .badge-high {
+  color: white;
+  background-color: orange;
 }
 
 .badge-medium {
+  color: black;
+  background-color: goldenrod;
 }
 
 .badge-low {
+  color: white;
+  background-color: green;
 }
 
 /* ---------- Status pills ---------- */

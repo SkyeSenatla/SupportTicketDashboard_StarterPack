@@ -100,6 +100,14 @@ public class TicketManager
         var result = new List<Ticket>();
         // TODO: Loop through _tickets and add any ticket with PriorityLevel
         // "Critical" or "High" to result.
+        foreach (var ticket in _tickets)
+        {
+            if (ticket.PriorityLevel == "Critical" || ticket.PriorityLevel == "High")
+            {
+                result.Add(ticket);
+            }
+        }
+
         return result;
     }
 
@@ -117,6 +125,7 @@ public class TicketManager
     {
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by CreatedDate, newest first.
+        sorted.Sort((a, b) => b.CreatedDate.CompareTo(a.CreatedDate));
         return sorted;
     }
 
@@ -129,6 +138,7 @@ public class TicketManager
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by PriorityRank[t.PriorityLevel] ascending,
         // then by CreatedDate descending within the same priority.
+        //sorted.Sort((a, b) => a.PriorityRank[t.PriorityLevel].CompareTo(b.CreatedDate));
         return sorted;
     }
 
@@ -149,7 +159,16 @@ public class TicketManager
     {
         // TODO: Implement. Remember AssignedTo can itself be null - don't
         // let a null AssignedTo blow up your comparison.
-        return new List<Ticket>();
+        var assigned = new List<Ticket>();
+        
+        foreach(var ticket in _tickets)
+        {
+            if(ticket.AssignedTo == "Maya Patel")
+            {
+                assigned.Add(ticket);
+            }
+        }
+        return assigned;
     }
 
     // Returns tickets where the keyword (case-insensitive) appears in the
