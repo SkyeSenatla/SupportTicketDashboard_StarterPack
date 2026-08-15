@@ -196,6 +196,8 @@ public class TicketManager
     {
         // TODO: Implement using LINQ. You'll need Any() to look inside the
         // Tags and Comments collections on each ticket.
+
+        SearchTickets=> s.keyword = Title,Tags , Comments         
         return new List<Ticket>();
     }
 
