@@ -13,10 +13,8 @@ body {
 }
 
 /* ---------- Header ---------- */
-/* TODO: This header is stacking vertically instead of spreading the title
-   and filter buttons across one row. Add the layout property (and any
-   alignment properties you need) to fix it. */
 .dashboard-header {
+  display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
@@ -30,8 +28,9 @@ body {
   font-size: 1.5rem;
 }
 
-/* TODO: The filter buttons are stacking vertically instead of sitting in a row. */
+/* ---------- Filter panel ---------- */
 .filter-panel {
+  display: flex;
   gap: 8px;
 }
 
@@ -70,10 +69,10 @@ body {
   margin-bottom: 8px;
 }
 
-/* TODO: Tickets are stacking in a single column instead of a responsive
-   grid. Add the layout property (and a template for the columns) so
-   cards flow into a multi-column grid that wraps as the window resizes. */
+/* ---------- Ticket grid ---------- */
 .ticket-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 16px;
 }
 
@@ -116,20 +115,24 @@ body {
   white-space: nowrap;
 }
 
-/* TODO: Give each priority badge a background-color and text color.
-   badge-critical should read clearly as the most urgent (e.g. red bg,
-   white text); badge-high, badge-medium and badge-low should step down
-   in urgency from there. */
 .badge-critical {
+  background-color: #dc2626;
+  color: #ffffff;
 }
 
 .badge-high {
+  background-color: #f97316;
+  color: #ffffff;
 }
 
 .badge-medium {
+  background-color: #facc15;
+  color: #713f12;
 }
 
 .badge-low {
+  background-color: #22c55e;
+  color: #ffffff;
 }
 
 /* ---------- Status pills ---------- */
