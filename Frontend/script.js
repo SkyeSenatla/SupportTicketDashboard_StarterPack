@@ -26,6 +26,8 @@ function renderTickets(ticketsToRender) {
   container.innerHTML = "";
 
   ticketsToRender.forEach(ticket => {
+   
+
     // TODO: Build the ticket card DOM structure and append it to `container`.
     // Match the structure of the "Example Ticket Card" in index.html:
     //   <article class="ticket-card">
@@ -81,8 +83,11 @@ renderTickets(tickets);
 // Counts tickets per status. Returns a plain object like
 // { "Open": 4, "In Progress": 2, "Closed": 2 }.
 // TODO: Implement using reduce(), not a manual loop.
-function getTicketCountsByStatus(ticketsToCount) {
-  return {};
+function getTicketCountsByStatus(tickets) {
+    return tickets.reduce((counts, ticket) => {
+        counts[ticket.status] = (counts[ticket.status] || 0) + 1;
+        return counts;
+    }, {});
 }
 
 // Returns a NEW array ordered by urgency first (Critical, then High, then
@@ -90,16 +95,45 @@ function getTicketCountsByStatus(ticketsToCount) {
 // first. Must not mutate the input array. Use the PRIORITY_RANK map above -
 // sorting priorityLevel as a plain string will NOT give you the right order.
 // TODO: Implement.
-function sortTicketsByPriorityThenDate(ticketsToSort) {
-  return [...ticketsToSort];
+function sortTicketsByPriorityThenDate(tickets) {
+    const priorityRank = {
+        Critical: 0,
+        High: 1,
+        Medium: 2,
+        Low: 3
+    };
+
+    return [...tickets].sort((a, b) => {
+        const priorityComparison =
+            priorityRank[a.priorityLevel] - priorityRank[b.priorityLevel];
+
+        if (priorityComparison !== 0) {
+            return priorityComparison;
+        }
+
+        return new Date(b.createdDate) - new Date(a.createdDate);
+    });
 }
 
 // Returns the average number of days between createdDate and closedDate
 // for tickets that have a closedDate. Tickets without a closedDate must be
 // excluded. Return 0 if there are no closed tickets (don't divide by zero!).
 // TODO: Implement.
-function getAverageResolutionDays(ticketsToAverage) {
-  return 0;
+function getAverageResolutionDays(tickets) {
+    const closedTickets = tickets.filter(ticket => ticket.closedDate);
+
+    if (closedTickets.length === 0) {
+        return 0;
+    }
+
+    const totalDays = closedTickets.reduce((total, ticket) => {
+        const created = new Date(ticket.createdDate);
+        const closed = new Date(ticket.closedDate);
+
+        return total + (closed - created) / (1000 * 60 * 60 * 24);
+    }, 0);
+
+    return totalDays / closedTickets.length;
 }
 
 // Returns tickets assigned to the given person (case-insensitive match on
@@ -107,16 +141,37 @@ function getAverageResolutionDays(ticketsToAverage) {
 // that are currently unassigned.
 // TODO: Implement. Remember assignedTo can itself be null - don't let a
 // null assignedTo blow up your comparison.
-function getTicketsByAssignee(ticketsToFilter, assignee) {
-  return [];
+function getTicketsByAssignee(tickets, assignee) {
+    if (!assignee || assignee.trim() === "") {
+        return tickets.filter(ticket => ticket.assignedTo == null);
+    }
+
+    return tickets.filter(ticket =>
+        ticket.assignedTo != null &&
+        ticket.assignedTo.toLowerCase() === assignee.toLowerCase()
+    );
 }
 
 // Returns tickets where the keyword (case-insensitive) appears in the
 // title, in any of the ticket's tags, or in the text of any comment.
 // TODO: Implement. You'll need some() to look inside the tags and comments
 // arrays on each ticket.
-function searchTickets(ticketsToSearch, keyword) {
-  return [];
+function searchTickets(tickets, keyword) {
+    if (!keyword || keyword.trim() === "") {
+        return [];
+    }
+
+    const searchTerm = keyword.toLowerCase();
+
+    return tickets.filter(ticket =>
+        ticket.title.toLowerCase().includes(searchTerm) ||
+        ticket.tags.some(tag =>
+            tag.toLowerCase().includes(searchTerm)
+        ) ||
+        ticket.comments.some(comment =>
+            comment.text.toLowerCase().includes(searchTerm)
+        )
+    );
 }
 
 // Returns a NEW array of tickets sorted newest to oldest by createdDate.
@@ -157,3 +212,12 @@ console.log("=== Tickets Sorted Newest To Oldest ===");
 getTicketsSortedByDate(tickets).forEach(t => console.log(`${t.createdDate} - #${t.id} ${t.title}`));
 console.log("=== Ticket Order After Sorting By Date (should still be #1..#8) ===");
 console.log(tickets.map(t => t.id).join(", "));
+
+
+
+
+
+
+
+
+
