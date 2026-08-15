@@ -113,7 +113,7 @@ function getTicketsByAssignee(ticketsToFilter, assignee) {
 
 // Returns tickets where the keyword (case-insensitive) appears in the
 // title, in any of the ticket's tags, or in the text of any comment.
-// TODO: Implement. You'll need some() to look inside the tags and comments
+// TODO: Implement. You'll need some() to look inside the tags and comment
 // arrays on each ticket.
 function searchTickets(ticketsToSearch, keyword) {
   return [];
