@@ -117,7 +117,7 @@ public class TicketManager
         var counts = new Dictionary<string, int>();
         return counts;
         GetAllTickets.
-        GetTicketCountsByStatus => count.s {
+        GetTicketCountsByStatus => counts.s {
             Open ;
             Medium;
             Low;
