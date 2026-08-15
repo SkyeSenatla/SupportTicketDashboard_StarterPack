@@ -6,7 +6,7 @@ public class Comment
     public string Text { get; set; } = string.Empty;
     public DateTime Timestamp { get; set; }
 }
-
+//jjjjjj
 public class Ticket
 {
     public int Id { get; set; }
