@@ -28,20 +28,23 @@ function renderTickets(ticketsToRender) {
   ticketsToRender.forEach(ticket => {
     // TODO: Build the ticket card DOM structure and append it to `container`.
     // Match the structure of the "Example Ticket Card" in index.html:
-    //   <article class="ticket-card">
-    //     <div class="ticket-card-header">
-    //       <h3 class="ticket-title">...</h3>
-    //       <span class="badge ...">...</span>
-    //     </div>
-    //     <div class="ticket-meta">
-    //       <span class="ticket-status ...">...</span>
-    //       <span class="ticket-date">...</span>
-    //     </div>
-    //   </article>
+      <article class="ticket-card">
+         <div class="ticket-card-header">
+           <h3 class="ticket-title">...</h3>
+          <span class="badge ...">...</span>
+         </div>
+         <div class="ticket-meta">
+           <span class="ticket-status ...">...</span>
+           <span class="ticket-date">...</span>
+         </div>
+       </article>
+
     //
     // TODO: Dynamic styling - use getBadgeClass(ticket.priorityLevel) and
     // getStatusClass(ticket.status) to add the correct classes to the
     // badge and status elements so they're colored based on the ticket's data.
+
+
   });
 }
 
@@ -70,6 +73,14 @@ function showOpenTickets() {
 // TODO: Wire up the three filter buttons (#filter-all, #filter-critical,
 // #filter-open) with click listeners that call showAllTickets(),
 // showCriticalTickets() and showOpenTickets() respectively.
+
+function showAllTickets() {
+  renderTickets(tickets);
+  setActiveButton("filter-all");
+  
+}
+
+
 
 renderTickets(tickets);
 
@@ -127,7 +138,7 @@ function searchTickets(ticketsToSearch, keyword) {
 // array?) and fix the one line responsible. Do not rewrite the function
 // from scratch.
 function getTicketsSortedByDate(ticketsToSort) {
-  ticketsToSort.sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
+  ticketsToSort.sort((a, b) => new Date(a.createdDate) - new Date(b.createdDate));
   return ticketsToSort;
 }
 
