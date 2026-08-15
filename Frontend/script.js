@@ -15,7 +15,7 @@ const PRIORITY_RANK = { Critical: 0, High: 1, Medium: 2, Low: 3 };
 
 function getBadgeClass(priorityLevel) {
   return "badge-" + priorityLevel.toLowerCase();
-}
+}//end of statement
 
 function getStatusClass(status) {
   return "status-" + status.toLowerCase().replace(" ", "-");
@@ -99,6 +99,7 @@ function sortTicketsByPriorityThenDate(ticketsToSort) {
 // excluded. Return 0 if there are no closed tickets (don't divide by zero!).
 // TODO: Implement.
 function getAverageResolutionDays(ticketsToAverage) {
+  
   return 0;
 }
 
